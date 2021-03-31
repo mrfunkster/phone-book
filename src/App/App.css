@@ -1,10 +1,11 @@
 body {
-    position: relative;
+    display: flex;
+    flex-direction: column;
     min-height: 100vh;
     min-height: -webkit-fill-available;
     padding-bottom: 54px;
     overflow-x: hidden;
 }
-html {
-    height: -webkit-fill-available;
+main {
+    flex: 1;
 }
