@@ -14,7 +14,7 @@ const Main = ({
     isLogged
 }) => {
     return (
-        <main>
+        <main className="main">
             <AnimatePresence exitBeforeEnter>
                 <Switch>
                     <Route path="/" exact>
