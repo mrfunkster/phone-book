@@ -3,9 +3,11 @@ body {
     flex-direction: column;
     min-height: 100vh;
     min-height: -webkit-fill-available;
-    padding-bottom: 54px;
     overflow-x: hidden;
 }
 main {
     flex: 1;
+}
+html {
+    height: -webkit-fill-available;
 }
