@@ -1,6 +1,10 @@
 body {
     position: relative;
     min-height: 100vh;
+    min-height: -webkit-fill-available;
     padding-bottom: 54px;
     overflow-x: hidden;
+}
+html {
+    height: -webkit-fill-available;
 }

@@ -25,7 +25,7 @@ const HeaderMenu = ({
                 <li><Link to="/login">Sign In</Link></li>
                 <li className="btn btn-success"
                     onClick={() => history.push('/registration')}
-                >Sign Up!</li>
+                >Sign Up</li>
             </ul>
         );
     }
