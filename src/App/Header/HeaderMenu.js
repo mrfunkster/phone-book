@@ -12,6 +12,7 @@ const HeaderMenu = ({
     if(isLogged) {
         return (
             <ul className="nav-menu">
+                <li><Link to="/">My Contacts</Link></li>
                 <li><Link to="/account">Account</Link></li>
                 <li className="btn btn-danger"
                     onClick={() => logOut()}
