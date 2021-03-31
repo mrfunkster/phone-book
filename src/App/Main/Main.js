@@ -1,6 +1,6 @@
 import React from 'react';
 import { AnimatePresence } from 'framer-motion';
-import { Route, Switch } from 'react-router';
+import { Redirect, Route, Switch } from 'react-router';
 import { connect } from 'react-redux';
 
 import MainContent from './MainContent';
@@ -18,7 +18,7 @@ const Main = ({
             <AnimatePresence exitBeforeEnter>
                 <Switch>
                     <Route path="/" exact>
-                        {isLogged ? <MainContent /> : <Login />}
+                        {isLogged ? <MainContent /> : <Redirect to="/account"/>}
                     </Route>
                     <Route path="/login">
                         <Login />
@@ -27,7 +27,7 @@ const Main = ({
                         <Registration />
                     </Route>
                     <Route path="/account">
-                        <Account />
+                        {isLogged ? <Account /> : <Redirect to="/login"/>}
                     </Route>
                 </Switch>
             </AnimatePresence>

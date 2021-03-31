@@ -1,7 +1,7 @@
 import { LOG_IN, LOG_OUT } from "./types";
 
 const initialState = {
-    isLogged: true
+    isLogged: false
 }
 
 const appReducer = (state = initialState, action) => {

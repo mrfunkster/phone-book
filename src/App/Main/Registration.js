@@ -9,9 +9,9 @@ const Registration = () => {
             exit={{ opacity: 0, scale: 0.9 }}
             transition={{ duration: 0.3, transition: 'ease-in-out' }}
         >
-            <div className="row">
-                <div className="col">
-                    REGISTRATION
+            <div className="row space-between align-center">
+                <div className="col-sm-12 col-md-6 col-lg-8">
+                    <h2 className="text-centered">REGISTRATION</h2>
                 </div>
             </div>
         </motion.div>

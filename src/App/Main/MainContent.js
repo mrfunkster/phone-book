@@ -11,7 +11,7 @@ const MainContent = () => {
         >
             <div className="row">
                 <div className="col">
-                    MAIN CONTENT
+                    <h2 className="text-centered">MAIN CONTENT</h2>
                 </div>
             </div>
         </motion.div>

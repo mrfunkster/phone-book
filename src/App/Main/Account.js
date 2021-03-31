@@ -11,7 +11,7 @@ const Account = () => {
         >
             <div className="row">
                 <div className="col">
-                    ACCOUNT
+                    <h2 className="text-centered">ACCOUNT</h2>
                 </div>
             </div>
         </motion.div>

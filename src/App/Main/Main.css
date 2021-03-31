@@ -1,0 +1,24 @@
+main .container {
+    padding-top: 30px;
+    padding-bottom: 30px;
+}
+
+.flex {
+    display: flex;
+}
+.space-between {
+    justify-content: space-between;
+}
+.align-center {
+    align-items: center;
+}
+.text-centered {
+    text-align: center;
+}
+.login-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 15px;
+    border-radius: 10px;
+}
