@@ -137,13 +137,7 @@ export const registerWithByEmailAndPassword = (formData) => {
                             email: formData.email,
                             password: formData.password
                         },
-                        userPhoneBook : {
-                            dmytroluhovskyi: {
-                                firstName: "Dmytro",
-                                lastName: "Luhovskyi",
-                                phone: "+38(095)-692-94-16"
-                            }
-                        }
+                        userPhoneBook : {}
                     };
                     return base.database().ref('users/' + userID).set(userData)
                         .then(() => {
@@ -151,6 +145,7 @@ export const registerWithByEmailAndPassword = (formData) => {
                             dispatch(setUserID(userID));
                             dispatch(setUserData(userData));
                             dispatch(getPhoneContacts(phoneContacts));
+                            dispatch(clearUserContact());
                             Cookies.set('userInfo', {
                                 email: userData.userInfo.email,
                                 password: userData.userInfo.password

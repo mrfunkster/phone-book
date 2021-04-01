@@ -9,6 +9,7 @@ import Registration from './Registration';
 
 import './Main.css';
 import Account from './Account';
+import CreateContact from './CreateContact';
 
 const Main = ({
     isLogged
@@ -28,6 +29,9 @@ const Main = ({
                     </Route>
                     <Route path="/account">
                         {isLogged ? <Account /> : <Redirect to="/login"/>}
+                    </Route>
+                    <Route path="/createcontact">
+                        {isLogged ? <CreateContact /> : <Redirect to="/login"/>}
                     </Route>
                 </Switch>
             </AnimatePresence>
