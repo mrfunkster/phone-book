@@ -1,13 +1,10 @@
 import React from 'react';
 import { motion } from 'framer-motion';
-import { connect } from 'react-redux';
-
-import { logIn } from '../../common/store/action'
 import { Link } from 'react-router-dom';
 
-const Login = ({
-    logIn
-}) => {
+import LoginForm from './LoginForm';
+
+const Login = () => {
     return (
         <motion.div className="container"
             initial={{ opacity: 0, scale: 0.9 }}
@@ -23,22 +20,11 @@ const Login = ({
                     <p className="text-centered">But if you do not have your personal account on PhoneBook, please <Link to="registration">sign up</Link>. It's absolutely free!!!</p>
                 </div>
                 <div className="col-sm-12 col-md-6 col-lg-3">
-                    <div className="login-form shadow">
-                        <div className="btn btn-success"
-                            onClick={() => logIn()}
-                        >LOG IN</div>
-                    </div>
+                    <LoginForm />
                 </div>
             </div>
         </motion.div>
     );
 };
 
-const mapDispatchToProps = {
-    logIn
-}
-
-export default connect(
-    null,
-    mapDispatchToProps
-)(Login);
+export default Login;

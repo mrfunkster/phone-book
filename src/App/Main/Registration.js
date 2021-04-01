@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import RegisterForm from './RegisterForm';
 
 const Registration = () => {
     return (
@@ -12,6 +13,9 @@ const Registration = () => {
             <div className="row space-between align-center">
                 <div className="col-sm-12 col-md-6 col-lg-8">
                     <h2 className="text-centered">REGISTRATION</h2>
+                </div>
+                <div className="col-sm-12 col-md-6 col-lg-3">
+                    <RegisterForm />
                 </div>
             </div>
         </motion.div>

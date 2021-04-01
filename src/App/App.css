@@ -1,11 +1,17 @@
+* {
+    -webkit-appearance: none;
+}
 body {
     overflow-x: hidden;
+}
+html {
+    height: -webkit-fill-available;
 }
 #root {
     display: flex;
     flex-direction: column;
     min-height: 100vh;
-    min-height: -webkit-fill-available;
+    /* min-height: -webkit-fill-available; */
 }
 .main {
     flex: 1;
