@@ -44,7 +44,8 @@ main .container {
     width: 100%;
     border-radius: 10px;
     background-color: rgba(240, 240, 244, .8);
-    padding: 15px 0;
+    padding-bottom: 15px;
+    overflow: hidden;
 }
 .contact-list-item {
     padding: 10px;
@@ -87,4 +88,33 @@ main .container {
 }
 .main-content-title {
     margin-bottom: 30px;
+}
+.contact-list-title {
+    padding: 10px;
+    transition: .3s;
+    display: flex;
+    border-bottom: 1px solid white;
+    font-weight: 600;
+    color: white;
+}
+
+.contact-list-title .first-name,
+.contact-list-title .last-name {
+    width: 32%;
+    border-right: 1px solid white;
+    transition: border-right .3s;
+}
+
+.contact-list-title .last-name,
+.contact-list .phone {
+    padding-left: 20px;
+}
+.contact-list-title .first-name,
+.contact-list-title .last-name {
+    cursor: pointer;
+}
+
+.contact-list-title .first-name.selected,
+.contact-list-title .last-name.selected {
+    color: #d1e7dd !important;
 }

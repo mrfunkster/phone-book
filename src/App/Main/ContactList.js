@@ -8,7 +8,8 @@ import Search from './Search';
 class ContactList extends Component {
 
     state = {
-        isSelected: {}
+        isSelected: {},
+        sortBy: "firstName"
     }
 
     isSelectedObject = () => {
@@ -37,6 +38,32 @@ class ContactList extends Component {
         this.props.selectUserContact(selectedArray[0]);
     };
 
+    sortByName = (a, b) => {
+        if(a.firstName < b.firstName) { return -1; };
+        if(a.firstName > b.firstName) { return 1; };
+        return 0;
+    }
+
+    sortByLastName = (a, b) => {
+        if(a.lastName < b.lastName) { return -1; };
+        if(a.lastName > b.lastName) { return 1; };
+        return 0;
+    }
+
+    setSortByName = () => {
+        this.setState(prevState => ({
+            ...prevState,
+            sortBy: "firstName"
+        }));
+    };
+
+    setSortByLastName = () => {
+        this.setState(prevState => ({
+            ...prevState,
+            sortBy: "lastName"
+        }));
+    };
+
 
     render() {
         const {
@@ -46,14 +73,24 @@ class ContactList extends Component {
             <div className="contact-list-section">
                 <Search />
                 <div className="contact-list shadow">
+                    <div className="contact-list-title bg-success">
+                        <div className={this.state.sortBy === "firstName" ? "first-name selected" : "first-name"}
+                            onClick={() => this.setSortByName()}
+                        >First Name</div>
+                        <div className={this.state.sortBy === "lastName" ? "last-name selected" : "last-name"}
+                            onClick={() => this.setSortByLastName()}
+                        >Last Name</div>
+                        <div className="phone">Phone Number</div>
+                    </div>
                     {
-                        contactsList.map((phoneContacts) => (
-                            <ContactListItem 
-                                key={phoneContacts.id}
-                                phoneContacts={phoneContacts}
-                                markSelected={this.markSelected}
-                                isSelected={this.state.isSelected}
-                            />
+                        contactsList.sort(this.state.sortBy === "firstName" ? this.sortByName : this.sortByLastName)
+                            .map((phoneContacts) => (
+                                <ContactListItem 
+                                    key={phoneContacts.id}
+                                    phoneContacts={phoneContacts}
+                                    markSelected={this.markSelected}
+                                    isSelected={this.state.isSelected}
+                                />
                         ))
                     }
                     
