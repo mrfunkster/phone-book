@@ -1,5 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import ContactPreview from './ContactPreview';
+import ContactList from './ContactList';
 
 const MainContent = () => {
     return (
@@ -11,7 +13,15 @@ const MainContent = () => {
         >
             <div className="row">
                 <div className="col">
-                    <h2 className="text-centered">MAIN CONTENT</h2>
+                    <h2 className="text-centered">My PhoneBook</h2>
+                </div>
+            </div>
+            <div className="row">
+                <div className="col-sm-12 col-md-4 col-lg-4">
+                    <ContactPreview />
+                </div>
+                <div className="col-sm-12 col-md-8 col-lg-6">
+                    <ContactList />
                 </div>
             </div>
         </motion.div>

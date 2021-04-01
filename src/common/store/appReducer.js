@@ -1,11 +1,14 @@
-import { CLEAR_COOKIE_STATE, CLEAR_USER_DATA, CLEAR_USER_ID, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID } from "./types";
+import { CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_PHONE_CONTACTS, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID } from "./types";
 
 const initialState = {
     isLogged: false,
     loginLoader: false,
     userData: {},
     userID: "",
-    isCookie: false
+    isCookie: false,
+    phoneContacts: [],
+    selectedUser: {}
+
 }
 
 const appReducer = (state = initialState, action) => {
@@ -30,6 +33,14 @@ const appReducer = (state = initialState, action) => {
             return {...state, isCookie: true};
         case CLEAR_COOKIE_STATE:
             return {...state, isCookie: false};
+        case GET_PHONE_CONTACTS: 
+            return {...state, phoneContacts: action.payload};
+        case CLEAR_PHONE_CONTACTS:
+            return {...state, phoneContacts: []};
+        case SELECT_USER_CONTACT:
+            return {...state, selectedUser: action.payload}
+        case CLEAR_USER_CONTACT:
+                return {...state, selectedUser: {}}
         default: return state;
     };
 };

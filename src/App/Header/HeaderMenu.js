@@ -5,14 +5,23 @@ import { connect } from 'react-redux';
 import history from '../../common/components/history';
 import { logOut } from '../../common/store/action';
 
+const contactsCount = (obj) => {
+    if(obj) {
+        return `(${Object.keys(obj).length})`;
+    } else {
+        return ""
+    };
+};
+
 const HeaderMenu = ({
     isLogged,
-    logOut
+    logOut,
+    userContacts
 }) => {
     if(isLogged) {
         return (
             <ul className="nav-menu">
-                <li><Link to="/">My Contacts</Link></li>
+                <li><Link to="/">My Contacts{contactsCount(userContacts)}</Link></li>
                 <li><Link to="/account">Account</Link></li>
                 <li className="btn btn-danger"
                     onClick={() => logOut()}
@@ -32,7 +41,8 @@ const HeaderMenu = ({
 };
 
 const mapStateToProps = state => ({
-    isLogged: state.app.isLogged
+    isLogged: state.app.isLogged,
+    userContacts: state.app.userData.userPhoneBook
 });
 
 const mapDispatchToProps = {

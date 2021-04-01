@@ -27,3 +27,61 @@ main .container {
     display: flex;
     justify-content: center;
 }
+.search {
+    width: 100%;
+    border-radius: 10px;
+    background-color: rgba(240, 240, 244, .8);
+    padding: 15px;
+}
+.search input {
+    width: 100%;
+    outline: none;
+    border: none;
+    background-color: unset;
+}
+.contact-list {
+    margin-top: 15px;
+    width: 100%;
+    border-radius: 10px;
+    background-color: rgba(240, 240, 244, .8);
+    padding: 15px 0;
+}
+.contact-list-item {
+    padding: 10px;
+    cursor: pointer;
+    transition: .3s;
+    display: flex;
+    border-bottom: 1px solid gray;
+}
+.contact-list-item:last-child {
+    border: none !important;
+}
+.contact-list-item:hover {
+    background-color: rgba(53, 120, 246, .75);
+    color: white;
+}
+.contact-list-item.selected {
+    background-color: rgb(53, 120, 246);
+    color: white;
+    
+}
+.contact-list-item .first-name,
+.contact-list-item .last-name {
+    width: 32%;
+    border-right: 1px solid gray;
+    transition: border-right .3s;
+}
+.contact-list .first-name {
+    padding-left: 5px;
+}
+.contact-list-item .last-name,
+.contact-list .phone {
+    padding-left: 20px;
+}
+
+.contact-list-item:hover .first-name,
+.contact-list-item:hover .last-name,
+.contact-list-item.selected .last-name,
+.contact-list-item.selected .first-name {
+    border-right: 1px solid white;
+}

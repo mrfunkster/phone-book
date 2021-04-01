@@ -1,6 +1,6 @@
 import history from "../components/history";
 import base from "../components/firebase"
-import { CLEAR_COOKIE_STATE, CLEAR_USER_DATA, CLEAR_USER_ID, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID } from "./types";
+import { CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_PHONE_CONTACTS, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID } from "./types";
 import Cookies from "js-cookie";
 
 export const logIn = () => {
@@ -57,6 +57,30 @@ export const hideLoginLoader = () => ({
     type: LOGIN_HIDE_LOADER
 });
 
+export const getPhoneContacts = (payload) => {
+    return {
+        type: GET_PHONE_CONTACTS,
+        payload
+    };
+};
+
+export const clearPhoneContacts = () => {
+    return {
+        type: CLEAR_PHONE_CONTACTS
+    };
+};
+
+export const selectUserContact = payload => {
+    return {
+        type: SELECT_USER_CONTACT,
+        payload
+    };
+};
+
+export const clearUserContact = () => ({
+    type: CLEAR_USER_CONTACT
+});
+
 export const authWithEmailAndPassword = (formData) => {
     return async dispatch => {
         try {
@@ -68,18 +92,20 @@ export const authWithEmailAndPassword = (formData) => {
                         .then(snapshot => {
                             if(snapshot.exists()) {
                                 let userData = snapshot.val();
+                                let phoneContacts = Object.values(userData.userPhoneBook ? userData.userPhoneBook : {});
                                 dispatch(setUserData(userData ? userData : {}));
                                 dispatch(setUserID(userID.length ? userID : ""));
+                                dispatch(getPhoneContacts(phoneContacts));
                                 if(formData.rememberMe) {
                                     Cookies.set('userInfo', {
                                         email: userData.userInfo.email,
                                         password: userData.userInfo.password
                                     }, {expires: 7});
-                                }
+                                };
+                                dispatch(clearCookiesState());
                                 dispatch(hideLoginLoader());
                                 dispatch(logIn());
                                 history.push('/');
-                                dispatch(clearCookiesState());
                             } else {
                                 console.log('No Data available!');
                                 dispatch(hideLoginLoader());
@@ -92,6 +118,9 @@ export const authWithEmailAndPassword = (formData) => {
             alert(error.message);
             dispatch(clearCookiesState());
             dispatch(hideLoginLoader());
+            if(Cookies.get('userInfo')) {
+                Cookies.remove('userInfo');
+            };
         };
     };
 };
@@ -108,12 +137,20 @@ export const registerWithByEmailAndPassword = (formData) => {
                             email: formData.email,
                             password: formData.password
                         },
-                        userPhoneBook : {}
+                        userPhoneBook : {
+                            dmytroluhovskyi: {
+                                firstName: "Dmytro",
+                                lastName: "Luhovskyi",
+                                phone: "+38(095)-692-94-16"
+                            }
+                        }
                     };
                     return base.database().ref('users/' + userID).set(userData)
                         .then(() => {
+                            let phoneContacts = Object.values(userData.userPhoneBook ? userData.userPhoneBook : {});
                             dispatch(setUserID(userID));
                             dispatch(setUserData(userData));
+                            dispatch(getPhoneContacts(phoneContacts));
                             Cookies.set('userInfo', {
                                 email: userData.userInfo.email,
                                 password: userData.userInfo.password
@@ -141,6 +178,7 @@ export const logOut = () => {
                     dispatch(clearUserData());
                     dispatch(hideLoginLoader());
                     dispatch(logOutState());
+                    dispatch(clearPhoneContacts());
                     if(Cookies.get('userInfo')) {
                         Cookies.remove('userInfo');
                     };
