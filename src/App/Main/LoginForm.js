@@ -9,7 +9,7 @@ class LoginForm extends Component {
     state = {
         email: "",
         password: "",
-        rememberMe: false
+        rememberMe: true
     }
 
     handleSubmit = e => {
@@ -90,7 +90,7 @@ class LoginForm extends Component {
                                 id="remeberme"
                                 className="form-check-input shadow"
                                 name="rememberMe"
-                                value={this.state.rememberMe}
+                                checked={this.state.rememberMe}
                                 onChange={this.inputHandler}
                                 disabled={loginLoader}
                             />

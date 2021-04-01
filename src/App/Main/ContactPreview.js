@@ -14,10 +14,9 @@ class ContactPreview extends Component {
             selectedUser
         } = this.props
         return (
-
             <div className="contact-preview-section shadow">
                 {
-                    Object.keys(selectedUser).length ?
+                    Object.entries(selectedUser).length ?
                         <>
                             <div className="contact-image">
                                 <div className="name-preview">{this.namePreview(selectedUser)}</div>

@@ -77,7 +77,7 @@ export const selectUserContact = payload => {
     };
 };
 
-export const clearUserContact = () => ({
+export const clearSelectedContact = () => ({
     type: CLEAR_USER_CONTACT
 });
 
@@ -145,7 +145,6 @@ export const registerWithByEmailAndPassword = (formData) => {
                             dispatch(setUserID(userID));
                             dispatch(setUserData(userData));
                             dispatch(getPhoneContacts(phoneContacts));
-                            dispatch(clearUserContact());
                             Cookies.set('userInfo', {
                                 email: userData.userInfo.email,
                                 password: userData.userInfo.password
@@ -170,15 +169,16 @@ export const logOut = () => {
             await base.auth().signOut()
                 .then(() => {
                     dispatch(clearUserID());
-                    dispatch(clearUserData());
                     dispatch(hideLoginLoader());
                     dispatch(logOutState());
+                    dispatch(clearUserData());
                     dispatch(clearPhoneContacts());
+                    dispatch(clearSelectedContact());
                     if(Cookies.get('userInfo')) {
                         Cookies.remove('userInfo');
                     };
                     history.push('/login');
-                })
+                });
         } catch (error) {
             console.log(error.code);
             alert(error.message);

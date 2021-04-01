@@ -76,8 +76,13 @@ main .container {
     padding-left: 5px;
 }
 .contact-list-item .last-name,
-.contact-list .phone {
+.contact-list-item .phone {
     padding-left: 20px;
+}
+.contact-list-item .first-name,
+.contact-list-item .last-name,
+.contact-list-item .phone {
+    flex: none;
 }
 
 .contact-list-item:hover .first-name,
@@ -106,12 +111,17 @@ main .container {
 }
 
 .contact-list-title .last-name,
-.contact-list .phone {
+.contact-list-title .phone {
     padding-left: 20px;
 }
 .contact-list-title .first-name,
 .contact-list-title .last-name {
     cursor: pointer;
+}
+.contact-list-title .first-name,
+.contact-list-title .last-name,
+.contact-list-title .phone {
+    flex: none;
 }
 
 .contact-list-title .first-name.selected,
