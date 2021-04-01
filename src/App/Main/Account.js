@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 
 const Account = () => {
     return (
@@ -14,6 +15,7 @@ const Account = () => {
                     <h2 className="text-centered">ACCOUNT</h2>
                 </div>
             </div>
+            <ScrollToTopOnMount />
         </motion.div>
     );
 };

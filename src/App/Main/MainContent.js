@@ -2,6 +2,7 @@ import React from 'react';
 import { motion } from 'framer-motion';
 import ContactPreview from './ContactPreview';
 import ContactList from './ContactList';
+import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 
 const MainContent = () => {
     return (
@@ -13,7 +14,7 @@ const MainContent = () => {
         >
             <div className="row">
                 <div className="col">
-                    <h2 className="text-centered">My PhoneBook</h2>
+                    <h2 className="text-centered main-content-title">My PhoneBook</h2>
                 </div>
             </div>
             <div className="row">
@@ -24,6 +25,7 @@ const MainContent = () => {
                     <ContactList />
                 </div>
             </div>
+            <ScrollToTopOnMount />
         </motion.div>
     );
 };

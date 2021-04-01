@@ -85,3 +85,6 @@ main .container {
 .contact-list-item.selected .first-name {
     border-right: 1px solid white;
 }
+.main-content-title {
+    margin-bottom: 30px;
+}

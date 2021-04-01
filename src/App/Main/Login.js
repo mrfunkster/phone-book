@@ -4,6 +4,7 @@ import { Link } from 'react-router-dom';
 
 import LoginForm from './LoginForm';
 import { connect } from 'react-redux';
+import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 
 const Login = ({
     isCookie
@@ -39,7 +40,7 @@ const Login = ({
                         </div>
                     </>
                 }
-
+                <ScrollToTopOnMount />
             </div>
         </motion.div>
     );

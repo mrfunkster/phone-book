@@ -1,6 +1,7 @@
 import React from 'react';
 import { motion } from 'framer-motion';
 import RegisterForm from './RegisterForm';
+import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 
 const Registration = () => {
     return (
@@ -18,6 +19,7 @@ const Registration = () => {
                     <RegisterForm />
                 </div>
             </div>
+            <ScrollToTopOnMount />
         </motion.div>
     );
 };
