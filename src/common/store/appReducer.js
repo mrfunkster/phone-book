@@ -1,10 +1,11 @@
-import { CLEAR_USER_DATA, CLEAR_USER_ID, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SET_USER_DATA, SET_USER_ID } from "./types";
+import { CLEAR_COOKIE_STATE, CLEAR_USER_DATA, CLEAR_USER_ID, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID } from "./types";
 
 const initialState = {
     isLogged: false,
     loginLoader: false,
     userData: {},
-    userID: ""
+    userID: "",
+    isCookie: false
 }
 
 const appReducer = (state = initialState, action) => {
@@ -25,6 +26,10 @@ const appReducer = (state = initialState, action) => {
             return {...state, userID: ""};
         case SET_USER_ID: 
             return {...state, userID: action.payload};
+        case SET_COOKIE_STATE:
+            return {...state, isCookie: true};
+        case CLEAR_COOKIE_STATE:
+            return {...state, isCookie: false};
         default: return state;
     };
 };

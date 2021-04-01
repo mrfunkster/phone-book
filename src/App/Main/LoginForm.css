@@ -1,3 +1,6 @@
+.login-form form {
+    width: 100%;
+}
 .login-form .form-input {
     width: 100%;
     margin-bottom: 10px;

@@ -6,3 +6,5 @@ export const SET_USER_DATA = "SET_USER_DATA";
 export const CLEAR_USER_DATA = "CLEAR_USER_DATA";
 export const SET_USER_ID = "SET_USER_ID";
 export const CLEAR_USER_ID = "CLEAR_USER_ID";
+export const SET_COOKIE_STATE = "SET_COOKIE_STATE";
+export const CLEAR_COOKIE_STATE = "CLEAR_COOKIE_STATE";

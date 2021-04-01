@@ -1,6 +1,6 @@
 import history from "../components/history";
 import base from "../components/firebase"
-import { CLEAR_USER_DATA, CLEAR_USER_ID, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SET_USER_DATA, SET_USER_ID } from "./types";
+import { CLEAR_COOKIE_STATE, CLEAR_USER_DATA, CLEAR_USER_ID, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID } from "./types";
 import Cookies from "js-cookie";
 
 export const logIn = () => {
@@ -14,6 +14,14 @@ export const logOutState = () => {
         type: LOG_OUT
     };
 };
+
+export const loginWithCookies = () => ({
+    type: SET_COOKIE_STATE
+});
+
+export const clearCookiesState = () => ({
+    type: CLEAR_COOKIE_STATE
+});
 
 export const setUserID = (payload) => {
     return {
@@ -70,16 +78,19 @@ export const authWithEmailAndPassword = (formData) => {
                                 }
                                 dispatch(hideLoginLoader());
                                 dispatch(logIn());
-                                history.push('/')
+                                history.push('/');
+                                dispatch(clearCookiesState());
                             } else {
                                 console.log('No Data available!');
                                 dispatch(hideLoginLoader());
+                                dispatch(clearCookiesState());
                             };
                         });
                 });
         } catch (error) {
             console.log(error.code);
             alert(error.message);
+            dispatch(clearCookiesState());
             dispatch(hideLoginLoader());
         };
     };

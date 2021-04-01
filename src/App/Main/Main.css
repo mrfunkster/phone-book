@@ -22,3 +22,8 @@ main .container {
     padding: 15px;
     border-radius: 10px;
 }
+.login-loader {
+    padding: 15px;
+    display: flex;
+    justify-content: center;
+}
