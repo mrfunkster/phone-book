@@ -68,40 +68,50 @@ class ContactList extends Component {
     render() {
         const {
             contactsList,
+            searchQuery
         } = this.props
         return (
             <div className="contact-list-section">
                 <Search />
-                <div className="contact-list shadow">
-                    <div className="contact-list-title bg-success">
-                        <div className={this.state.sortBy === "firstName" ? "first-name selected" : "first-name"}
-                            onClick={() => this.setSortByName()}
-                        >First Name</div>
-                        <div className={this.state.sortBy === "lastName" ? "last-name selected" : "last-name"}
-                            onClick={() => this.setSortByLastName()}
-                        >Last Name</div>
-                        <div className="phone">Phone Number</div>
+                {
+                    contactsList.length ? 
+                        <div className="contact-list shadow">
+                            <div className="contact-list-title bg-success">
+                                <div className={this.state.sortBy === "firstName" ? "first-name selected" : "first-name"}
+                                    onClick={() => this.setSortByName()}
+                                >First Name</div>
+                                <div className={this.state.sortBy === "lastName" ? "last-name selected" : "last-name"}
+                                    onClick={() => this.setSortByLastName()}
+                                >Last Name</div>
+                                <div className="phone">Phone Number</div>
+                            </div>
+                            {
+                                contactsList.sort(this.state.sortBy === "firstName" ? this.sortByName : this.sortByLastName)
+                                    .map((phoneContacts) => (
+                                        <ContactListItem 
+                                            key={phoneContacts.id}
+                                            phoneContacts={phoneContacts}
+                                            markSelected={this.markSelected}
+                                            isSelected={this.state.isSelected}
+                                        />
+                                ))
+                            }
+                            
+                        </div>
+                    :
+                    <div className="contact-list shadow">
+                        <h5 style={{marginTop: "8px"}} className="text-centered">There is no search results for "{searchQuery}".</h5>
                     </div>
-                    {
-                        contactsList.sort(this.state.sortBy === "firstName" ? this.sortByName : this.sortByLastName)
-                            .map((phoneContacts) => (
-                                <ContactListItem 
-                                    key={phoneContacts.id}
-                                    phoneContacts={phoneContacts}
-                                    markSelected={this.markSelected}
-                                    isSelected={this.state.isSelected}
-                                />
-                        ))
-                    }
-                    
-                </div>
+                }
+
             </div>
         );
     }
 }
 
 const mapStateToProps = state => ({
-    contactsList: state.app.phoneContacts
+    contactsList: state.app.phoneContacts,
+    searchQuery: state.app.searchQuery
 });
 
 const mapDispatchToProps = {

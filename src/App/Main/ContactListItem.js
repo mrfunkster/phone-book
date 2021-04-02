@@ -1,4 +1,5 @@
 import React from 'react';
+import { formatPhoneNumber } from '../../common/components/commonFunctions';
 
 const ContactListItem = ({
     phoneContacts,
@@ -11,7 +12,7 @@ const ContactListItem = ({
         >
             <div className="first-name">{phoneContacts.firstName}</div>
             <div className="last-name">{phoneContacts.lastName}</div>
-            <div className="phone">{phoneContacts.phone}</div>
+            <div className="phone">{formatPhoneNumber(phoneContacts.phone)}</div>
         </div>
     )
 }

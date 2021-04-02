@@ -8,6 +8,7 @@ import Header from './App/Header/Header';
 import Main from './App/Main/Main';
 
 import './App/App.css'
+import { formatPhoneNumber } from './common/components/commonFunctions';
 
 
 function App({
@@ -26,6 +27,7 @@ function App({
 
   useEffect(() => {
     readCookie();
+    formatPhoneNumber(380956929416)
   })
 
   return (

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { formatPhoneNumber } from '../../common/components/commonFunctions';
 
 import './ContactPreview.css'
 
@@ -26,7 +27,7 @@ class ContactPreview extends Component {
                                 selectedUser.phone && 
                                     <div className="contact-info">
                                         <span className="description">phone</span>
-                                        <span className="info">{selectedUser.phone}</span>
+                                        <span className="info">{formatPhoneNumber(selectedUser.phone)}</span>
                                     </div>
                             }
                             {

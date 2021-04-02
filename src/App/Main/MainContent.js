@@ -47,7 +47,7 @@ const MainContent = ({
 };
 
 const mapStateToProps = state => ({
-    phoneContacts: state.app.phoneContacts
+    phoneContacts: Object.values(state.app.userData.userPhoneBook)
 })
 
 export default connect(
