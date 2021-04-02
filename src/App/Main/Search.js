@@ -38,6 +38,10 @@ const Search = ({
                 value={searchTerm}
                 onChange={handleChange}
             />
+            {
+                searchTerm.length !== 0 && <div className="clear-btn" onClick={() => setSearchTerm("")}>x</div>
+            }
+            
         </div>
     );
 };

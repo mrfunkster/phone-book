@@ -32,6 +32,20 @@ main .container {
     border-radius: 10px;
     background-color: rgba(240, 240, 244, .8);
     padding: 15px;
+    position: relative;
+}
+.search .clear-btn {
+    width: 30px;
+    height: 30px;
+    position: absolute;
+    right: 5px;
+    top: 50%;
+    transform: translateY(-50%);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 20px;
+    cursor: pointer;
 }
 .search input {
     width: 100%;
