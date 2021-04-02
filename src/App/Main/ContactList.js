@@ -93,6 +93,7 @@ class ContactList extends Component {
                                             phoneContacts={phoneContacts}
                                             markSelected={this.markSelected}
                                             isSelected={this.state.isSelected}
+                                            searchQuery={searchQuery}
                                         />
                                 ))
                             }

@@ -13,8 +13,8 @@ const Search = ({
 
 
     useEffect(() => {
-        let searchQuery = searchTerm.toLowerCase();
-        setSearchQuery(searchTerm);
+        let searchQuery = searchTerm.trim().toLowerCase();
+        setSearchQuery(searchTerm.trim());
         if(searchTerm) {
             const results = phoneContacts.filter(element => {
                 return element.firstName.toLowerCase().includes(searchQuery) 

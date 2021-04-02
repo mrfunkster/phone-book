@@ -4,10 +4,11 @@ import { formatPhoneNumber } from '../../common/components/commonFunctions';
 const ContactListItem = ({
     phoneContacts,
     markSelected,
-    isSelected
+    isSelected,
+    searchQuery
 }) => {
     return (
-        <div className={isSelected[phoneContacts.id] ? "contact-list-item selected" : "contact-list-item"}
+        <div className={isSelected[phoneContacts.id] ? "contact-list-item selected" : searchQuery.length ? "contact-list-item bg-warning" : "contact-list-item"}
             onClick={() => markSelected(phoneContacts.id)}
         >
             <div className="first-name">{phoneContacts.firstName}</div>

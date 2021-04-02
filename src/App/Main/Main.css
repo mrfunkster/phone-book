@@ -44,7 +44,6 @@ main .container {
     width: 100%;
     border-radius: 10px;
     background-color: rgba(240, 240, 244, .8);
-    padding-bottom: 15px;
     overflow: hidden;
 }
 .contact-list-item {
