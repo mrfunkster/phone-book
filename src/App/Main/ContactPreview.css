@@ -16,10 +16,22 @@
     user-select: none;
     position: relative;
 }
+.contact-image .preloader-overlay {
+    width: 100%;
+    height: 100%;
+    background-color: grey;
+    position: absolute;
+    z-index: 2;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
 .contact-image img {
     width: 100%;
     height: 100%;
     object-fit: cover;
+    position: absolute;
+    z-index: 1;
 }
 
 .name-preview {

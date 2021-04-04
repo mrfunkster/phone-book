@@ -1,6 +1,6 @@
 import history from "../components/history";
 import base from "../components/firebase"
-import { CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_PHONE_CONTACTS, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID, SET_SEARCH_QUERY, CLEAR_SEARCH_QUERY } from "./types";
+import { CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_PHONE_CONTACTS, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID, SET_SEARCH_QUERY, CLEAR_SEARCH_QUERY, GET_CONTACT_IMAGE, SHOW_CONTACTS_LOADER, HIDE_CONTACTS_LOADER } from "./types";
 import Cookies from "js-cookie";
 
 export const logIn = () => {
@@ -55,6 +55,14 @@ export const showLoginLoader = () => ({
 
 export const hideLoginLoader = () => ({
     type: LOGIN_HIDE_LOADER
+});
+
+export const showContactsLoader = () => ({
+    type: SHOW_CONTACTS_LOADER
+});
+
+export const hideContactsLoader = () => ({
+    type: HIDE_CONTACTS_LOADER
 });
 
 export const getPhoneContacts = (payload) => {
@@ -134,6 +142,31 @@ export const authWithEmailAndPassword = (formData) => {
     };
 };
 
+export const updateDataFromServer = (userID) => {
+    return async dispatch => {
+        try {
+            dispatch(showContactsLoader());
+            await base.database().ref('users/' + userID).get()
+                .then(snapshot => {
+                    if (snapshot.exists()) {
+                        let userData = snapshot.val();
+                        let phoneContacts = Object.values(userData.userPhoneBook ? userData.userPhoneBook : {});
+                        dispatch(setUserData(userData ? userData : {}));
+                        dispatch(getPhoneContacts(phoneContacts));
+                        dispatch(hideContactsLoader());
+                    } else {
+                        console.log('No Data available!');
+                        dispatch(hideContactsLoader());
+                    };
+                });
+        } catch (error) {
+            console.log(error.code);
+            alert(error.message);
+            dispatch(hideContactsLoader());
+        };
+    };
+};
+
 export const registerWithByEmailAndPassword = (formData) => {
     return async dispatch => {
         try {
@@ -193,6 +226,24 @@ export const logOut = () => {
             console.log(error.code);
             alert(error.message);
             dispatch(hideLoginLoader());
+        };
+    };
+};
+
+export const setContactImage = payload => ({
+    type: GET_CONTACT_IMAGE,
+    payload
+});
+
+export const getContactImage = (userID, contactID = 'contactID') => {
+    return async dispatch => {
+        try {
+            await base.storage().ref().child(`${userID}/${contactID}/image`).getDownloadURL()
+                .then(response => {
+                    dispatch(setContactImage(response));
+                });
+        } catch (error) {
+            dispatch(setContactImage(''));
         };
     };
 };

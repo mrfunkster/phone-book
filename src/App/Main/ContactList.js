@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import history from '../../common/components/history';
-import { selectUserContact } from '../../common/store/action';
+import { getContactImage, selectUserContact, setContactImage } from '../../common/store/action';
 
 import ContactListItem from './ContactListItem';
 import Search from './Search';
@@ -36,7 +36,12 @@ class ContactList extends Component {
         let selectedArray = this.props.contactsList.filter((el) => {
             return el.id === id
         });
+
         this.props.selectUserContact(selectedArray[0]);
+        this.props.setContactImage('');
+        if (selectedArray[0].image) {
+            this.props.getContactImage(this.props.userID, selectedArray[0].id);
+        };
     };
 
     sortByName = (a, b) => {
@@ -130,17 +135,20 @@ class ContactList extends Component {
 
             </div>
         );
-    }
-}
+    };
+};
 
 const mapStateToProps = state => ({
     contactsList: state.app.phoneContacts,
-    searchQuery: state.app.searchQuery
+    searchQuery: state.app.searchQuery,
+    userID: state.app.userID
 });
 
 const mapDispatchToProps = {
-    selectUserContact
-}
+    selectUserContact,
+    getContactImage,
+    setContactImage
+};
 
 export default connect(
     mapStateToProps,

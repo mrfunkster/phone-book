@@ -2,19 +2,30 @@ import React, { useEffect, useRef, useState } from 'react';
 import { motion } from 'framer-motion';
 import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 import history from '../../common/components/history';
-
-import './CreateContact.css'
+import base from '../../common/components/firebase';
+import { connect } from 'react-redux';
 import { capitalizeFirstLetter, namePreview } from '../../common/components/commonFunctions';
+import { updateDataFromServer } from '../../common/store/action';
 
-const CreateContact = () => {
+import './CreateContact.css';
+
+const CreateContact = ({
+    userID,
+    updateDataFromServer
+}) => {
 
     const [finishStatus, setFinishStatus] = useState(true);
+    const [contactImage, setContactImage] = useState(null);
+    const [isUploading, setIsUploading] = useState(false);
+    const [showModal, setShowModal] = useState(false);
+    const [success, setSuccess] = useState(true);
     const [userImagePreview, setUserImagePreview] = useState("");
     const [userContactData, setUserContactData] = useState({
         firstName: "",
         lastName: "",
         phone: "",
         email: "",
+        image: false,
         notifications: ""
     });
     const selectImage = useRef();
@@ -34,6 +45,7 @@ const CreateContact = () => {
                 reader.onload = (ev) => {
                     const src = ev.target.result;
                     setUserImagePreview(src);
+                    setContactImage(file);
                 };
                 reader.readAsDataURL(file);
             } else {
@@ -61,11 +73,61 @@ const CreateContact = () => {
 
     const addContactImage = () => {
         selectImage.current.click();
-    }
+    };
+
+    const successRedirect = () => {
+        setIsUploading(false);
+        setShowModal(false);
+        setFinishStatus(true);
+        updateDataFromServer(userID);
+        history.push('/');
+    };
+
+    const uploadingError = () => {
+        setShowModal(false);
+        setFinishStatus(false);
+        setIsUploading(false);
+    };
 
     const submitForm = (e) => {
         e.preventDefault();
-    }
+        setIsUploading(true);
+        try {
+            uploadImage()
+            .then(() => {
+                setUserContactData(prevState => ({
+                    ...prevState,
+                    image: true
+                }));
+            })
+            .then(() => setShowModal(true));
+        } catch (error) {
+            console.log(error.code)
+            setSuccess(false);
+            setShowModal(true);
+        };
+    };
+
+    const resetForm = () => {
+        if (window.confirm("Are you sure to clean ALL data?")) {
+            setFinishStatus(true);
+            clearContactImage();
+            setUserContactData({
+                firstName: "",
+                lastName: "",
+                phone: "",
+                email: "",
+                image: false,
+                notifications: ""
+            });
+        };
+    };
+
+    const uploadImage = () => {
+        const storageRef = base.storage().ref();
+        const fileRef = storageRef.child(`${userID}/${userContactData.phone}/image`);
+        return fileRef.put(contactImage);
+    };
 
     const onBackButtonEvent = e => {
         e.preventDefault();
@@ -110,6 +172,40 @@ const CreateContact = () => {
             </div>
             <div className="row">
                 <div className="create-contact-section shadow">
+                    {
+                        isUploading &&
+                        <div className="modal-overlay">
+                            {
+                                !showModal ?
+                                <>
+                                    <div className="spinner-border text-success" role="status">
+                                        <span className="visually-hidden">Loading...</span>
+                                    </div>
+                                    <span>Creating a new contact...</span>
+                                </>
+                                : success ?
+                                <>
+                                    <span style={{color: "#198754", fontSize: "30px", fontWeight: 600}}>Well Done!</span>
+                                    <span>Youre contact is successfuly created!</span>
+                                    <br/>
+                                    <button 
+                                        className="btn btn-success"
+                                        onClick={() => successRedirect()}
+                                    >Ok</button>
+                                </>
+                                :
+                                <>
+                                <span style={{color: "#dc3545", fontSize: "30px", fontWeight: 600}}>Ooops!</span>
+                                <span>Something go wrong... Please try again!</span>
+                                <br/>
+                                <button 
+                                    className="btn btn-danger"
+                                    onClick={() => uploadingError()}
+                                >Ok</button>
+                            </>
+                            }
+                        </div>
+                    }
                     <div className="contact-image create"
                         onClick={() => userImagePreview ? clearContactImage() : addContactImage()}
                     >
@@ -130,6 +226,7 @@ const CreateContact = () => {
                             onChange={imageHandler}
                             ref={selectImage}
                             style={{display: "none"}}
+                            disabled={isUploading}
                         />
                         <div className="contact-header"><span>{`${capitalizeFirstLetter(userContactData.firstName)} ${capitalizeFirstLetter(userContactData.lastName)}`}</span></div>
                         <div className="input-field">
@@ -142,6 +239,7 @@ const CreateContact = () => {
                                     value={userContactData.firstName}
                                     onChange={inputHandler}
                                     name="firstName"
+                                    disabled={isUploading}
                                 />
                             </div>
                         </div>
@@ -155,6 +253,7 @@ const CreateContact = () => {
                                     value={userContactData.lastName}
                                     onChange={inputHandler}
                                     name="lastName"
+                                    disabled={isUploading}
                                 />
                             </div>
                         </div>
@@ -168,6 +267,8 @@ const CreateContact = () => {
                                     value={userContactData.phone}
                                     onChange={inputHandler}
                                     name="phone"
+                                    disabled={isUploading}
+                                    required={true}
                                 />
                             </div>
                         </div>
@@ -181,8 +282,23 @@ const CreateContact = () => {
                                     value={userContactData.email}
                                     onChange={inputHandler}
                                     name="email"
+                                    disabled={isUploading}
                                 />
                             </div>
+                        </div>
+                        <div className="input-field buttons">
+                            {
+                                !finishStatus && 
+                                <button 
+                                    className="btn btn-danger create-btn"
+                                    onClick={resetForm}
+                                    disabled={isUploading}
+                                >Reset</button>
+                            }
+                            <button 
+                                className="btn btn-success create-btn"
+                                disabled={finishStatus || isUploading}
+                            >Create Contact</button>
                         </div>
                     </form>
                 </div>
@@ -192,4 +308,15 @@ const CreateContact = () => {
     );
 };
 
-export default CreateContact;
+const mapStateToProps = state => ({
+    userID: state.app.userID
+});
+
+const mapDispatchToProps = {
+    updateDataFromServer
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(CreateContact);

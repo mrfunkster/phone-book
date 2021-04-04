@@ -7,7 +7,8 @@ import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 
 const MainContent = ({
-    phoneContacts
+    phoneContacts,
+    contactsLoader
 }) => {
     return (
         <motion.div className="container"
@@ -29,7 +30,16 @@ const MainContent = ({
                             <ContactPreview />
                         </div>
                         <div className="col-sm-12 col-md-8 col-lg-8">
-                            <ContactList />
+                            {
+                                contactsLoader ? 
+                                    <div class="d-flex flex-column align-items-center">
+                                        <span style={{fontSize: "22px", padding: "15px"}}>Please wait, your PhoneBook is loading now...</span>
+                                        <div class="spinner-border text-primary" role="status">
+                                            <span class="visually-hidden">Loading...</span>
+                                        </div>
+                                    </div>
+                                : <ContactList />
+                            }
                         </div>
                     </> :
                     <>
@@ -47,8 +57,9 @@ const MainContent = ({
 };
 
 const mapStateToProps = state => ({
-    phoneContacts: Object.values(state.app.userData.userPhoneBook)
-})
+    phoneContacts: Object.values(state.app.userData.userPhoneBook),
+    contactsLoader: state.app.contactsLoader
+});
 
 export default connect(
     mapStateToProps
