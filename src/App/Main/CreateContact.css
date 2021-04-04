@@ -62,3 +62,9 @@
 .create-contact-section .contact-header {
     text-align: center;
 }
+
+@media(max-width: 768px) {
+    .create-contact-section .input-field {
+        display: block;
+    }
+}

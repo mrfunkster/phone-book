@@ -117,7 +117,7 @@ const CreateContact = () => {
                                 <>
                                     <img src={userImagePreview} alt="Contact Preview"/>
                                 </>
-                            : <div className="name-preview">{namePreview(userContactData)}</div>
+                            : <div className="name-preview">{(userContactData.firstName || userContactData.lastName) ? namePreview(userContactData) : "?"}</div>
                         }
                     </div>
                     <form onSubmit={submitForm}>
