@@ -5,13 +5,14 @@ import history from '../../common/components/history';
 import base from '../../common/components/firebase';
 import { connect } from 'react-redux';
 import { capitalizeFirstLetter, namePreview } from '../../common/components/commonFunctions';
-import { updateDataFromServer } from '../../common/store/action';
+import { clearSelectedContact, updateDataFromServer } from '../../common/store/action';
 
 import './CreateContact.css';
 
 const CreateContact = ({
     userID,
-    updateDataFromServer
+    updateDataFromServer,
+    clearSelectedContact
 }) => {
 
     const [finishStatus, setFinishStatus] = useState(true);
@@ -80,6 +81,7 @@ const CreateContact = ({
         setShowModal(false);
         setFinishStatus(true);
         updateDataFromServer(userID);
+        clearSelectedContact();
         history.push('/');
     };
 
@@ -313,7 +315,8 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    updateDataFromServer
+    updateDataFromServer,
+    clearSelectedContact
 };
 
 export default connect(
