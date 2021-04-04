@@ -23,4 +23,10 @@ export const namePreview = user => {
     return firstName + lastName;
 };
 
-
+export const capitalizeFirstLetter = string => {
+    if(string.length) {
+        return string.charAt(0).toUpperCase() + string.slice(1);
+    } else {
+        return "";
+    };
+};

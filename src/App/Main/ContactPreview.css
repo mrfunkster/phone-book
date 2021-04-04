@@ -13,7 +13,13 @@
     border-radius: 50%;
     overflow: hidden;
     user-select: none;
+    position: relative;
 }
+.contact-image img {
+    width: 100%;
+    object-fit: contain;
+}
+
 .name-preview {
     color: white;
     font-size: 3.5rem;
