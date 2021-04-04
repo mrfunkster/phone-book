@@ -1,14 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { formatPhoneNumber } from '../../common/components/commonFunctions';
+import { formatPhoneNumber, namePreview } from '../../common/components/commonFunctions';
 
 import './ContactPreview.css'
 
 class ContactPreview extends Component {
-
-    namePreview = user => {
-        return user.firstName.substr(0, 1).toUpperCase() + user.lastName.substr(0, 1).toUpperCase()
-    }
 
     render() {
         const {
@@ -20,7 +16,7 @@ class ContactPreview extends Component {
                     Object.entries(selectedUser).length ?
                         <>
                             <div className="contact-image">
-                                <div className="name-preview">{this.namePreview(selectedUser)}</div>
+                                <div className="name-preview">{namePreview(selectedUser)}</div>
                             </div>
                             <div className="contact-header"><span>{`${selectedUser.firstName} ${selectedUser.lastName}`}</span></div>
                             {

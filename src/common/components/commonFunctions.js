@@ -8,4 +8,19 @@ export const formatPhoneNumber = (phone) => {
     };
 };
 
+export const namePreview = user => {
+    let firstName, lastName;
+    if(user.firstName.length) {
+        firstName = user.firstName.substr(0, 1).toUpperCase();
+    } else {
+        firstName = "";
+    };
+    if(user.lastName.length) {
+        lastName = user.lastName.substr(0, 1).toUpperCase();
+    } else {
+        lastName = "";
+    };
+    return firstName + lastName;
+};
+
 
