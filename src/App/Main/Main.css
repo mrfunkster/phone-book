@@ -28,11 +28,13 @@ main .container {
     justify-content: center;
 }
 .search {
-    width: 100%;
+    /* width: 80%; */
+    flex: 1;
     border-radius: 10px;
     background-color: rgba(240, 240, 244, .8);
     padding: 15px;
     position: relative;
+    margin-right: 15px;
 }
 .search .clear-btn {
     width: 30px;
@@ -96,6 +98,12 @@ main .container {
 .contact-list-item .last-name,
 .contact-list-item .phone {
     flex: none;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+.contact-list-item .phone {
+    width: 37%;
 }
 
 .contact-list-item:hover .first-name,
@@ -128,16 +136,28 @@ main .container {
     padding-left: 20px;
 }
 .contact-list-title .first-name,
-.contact-list-title .last-name {
-    cursor: pointer;
-}
-.contact-list-title .first-name,
 .contact-list-title .last-name,
 .contact-list-title .phone {
     flex: none;
+    cursor: pointer;
+    padding-right: 20px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
-
+.contact-list-title .phone {
+    width: 37%;
+}
 .contact-list-title .first-name.selected,
-.contact-list-title .last-name.selected {
+.contact-list-title .last-name.selected,
+.contact-list-title .phone.selected {
     color: #d1e7dd !important;
+}
+.search-add-section {
+    display: flex;
+    justify-content: space-between;
+    align-items: stretch;
+}
+.create-new-contact .add-button {
+    height: 100%;
+    border-radius: 10px;
 }

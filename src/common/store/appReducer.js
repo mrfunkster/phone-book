@@ -1,4 +1,4 @@
-import { CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_PHONE_CONTACTS, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_SEARCH_QUERY, SET_USER_DATA, SET_USER_ID } from "./types";
+import { CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_SEARCH_QUERY, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_PHONE_CONTACTS, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_SEARCH_QUERY, SET_USER_DATA, SET_USER_ID } from "./types";
 
 const initialState = {
     isLogged: false,
@@ -43,6 +43,8 @@ const appReducer = (state = initialState, action) => {
                 return {...state, selectedUser: {}};
         case SET_SEARCH_QUERY:
             return {...state, searchQuery: action.payload};
+        case CLEAR_SEARCH_QUERY:
+            return {...state, searchQuery: ""};
         default: return state;
     };
 };

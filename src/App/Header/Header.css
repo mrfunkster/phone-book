@@ -57,4 +57,7 @@ header .row {
     .header-title h2 {
         display: none;
     }
+    .nav-menu li a {
+        padding: 5px;
+    }
 }

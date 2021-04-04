@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import history from '../../common/components/history';
 import { selectUserContact } from '../../common/store/action';
 
 import ContactListItem from './ContactListItem';
@@ -42,13 +43,19 @@ class ContactList extends Component {
         if(a.firstName < b.firstName) { return -1; };
         if(a.firstName > b.firstName) { return 1; };
         return 0;
-    }
+    };
 
     sortByLastName = (a, b) => {
         if(a.lastName < b.lastName) { return -1; };
         if(a.lastName > b.lastName) { return 1; };
         return 0;
-    }
+    };
+
+    sortByNumber = (a, b) => {
+        if(a.phone < b.phone) { return -1; };
+        if(a.phone > b.phone) { return 1; };
+        return 0;
+    };
 
     setSortByName = () => {
         this.setState(prevState => ({
@@ -64,6 +71,13 @@ class ContactList extends Component {
         }));
     };
 
+    setSortByPhone = () => {
+        this.setState(prevState => ({
+            ...prevState,
+            sortBy: "phone"
+        }));
+    };
+
 
     render() {
         const {
@@ -72,7 +86,14 @@ class ContactList extends Component {
         } = this.props
         return (
             <div className="contact-list-section">
-                <Search />
+                <div className="search-add-section">
+                    <Search />
+                    <div className="create-new-contact">
+                        <button className="btn btn-success add-button shadow"
+                            onClick={() => history.push('/createcontact')}
+                        >Add New Contact</button>
+                    </div>
+                </div>
                 {
                     contactsList.length ? 
                         <div className="contact-list shadow">
@@ -83,10 +104,12 @@ class ContactList extends Component {
                                 <div className={this.state.sortBy === "lastName" ? "last-name selected" : "last-name"}
                                     onClick={() => this.setSortByLastName()}
                                 >Last Name</div>
-                                <div className="phone">Phone Number</div>
+                                <div className={this.state.sortBy === "phone" ? "phone selected" : "phone"}
+                                    onClick={() => this.setSortByPhone()}
+                                >Phone Number</div>
                             </div>
                             {
-                                contactsList.sort(this.state.sortBy === "firstName" ? this.sortByName : this.sortByLastName)
+                                contactsList.sort(this.state.sortBy === "firstName" ? this.sortByName : this.state.sortBy === "lastName" ? this.sortByLastName : this.sortByNumber)
                                     .map((phoneContacts) => (
                                         <ContactListItem 
                                             key={phoneContacts.id}
