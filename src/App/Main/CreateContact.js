@@ -39,20 +39,24 @@ const CreateContact = () => {
             } else {
                 if (file.size > 3145728) {
                     alert("Your image must be less then 3 MB!");
-                    selectImage.current.value = null;
+                    clearImageSelector();
                 } else if (!file.type.match('image')) {
                     alert("Use only image file!!!");
-                    selectImage.current.value = null;
+                    clearImageSelector();
                 } else {
-                    selectImage.current.value = null;
+                    clearImageSelector();
                 };
             };
         };
     };
 
+    const clearImageSelector = () => {
+        selectImage.current.value = null;
+    };
+
     const clearContactImage = () => {
         setUserImagePreview('');
-        selectImage.current.value = null;
+        clearImageSelector();
     };
 
     const addContactImage = () => {
