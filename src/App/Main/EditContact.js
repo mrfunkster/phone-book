@@ -18,11 +18,11 @@ const EditContact = ({
     clearSelectedContact
 }) => {
 
-    const [finishStatus, setFinishStatus] = useState(true);
+    const [finishStatus, setFinishStatus] = useState(false);
     const [contactImage, setContactImage] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
     const [showModal, setShowModal] = useState(false);
-    const [success, setSuccess] = useState(true);
+    const [success, setSuccess] = useState(false);
     const [userImagePreview, setUserImagePreview] = useState("");
     const [userContactData, setUserContactData] = useState({
         firstName: "",
@@ -128,13 +128,15 @@ const EditContact = ({
                     } else {
                         dataObject.image = res
                     };
+                    console.log("response after image uploading: " + res)
                 })
-                .then(() => {
-                    base.database().ref('users/' + userID + '/userPhoneBook/' + dataObject.id).update(dataObject);
+                .then(async () => {
+                    await base.database().ref('users/' + userID + '/userPhoneBook/' + dataObject.id).update(dataObject);
+                    return setShowModal(true);
                 })
-                .then(() => setShowModal(true));
             } catch (error) {
                 console.log(error.code)
+                alert(error.message)
                 setSuccess(false);
                 setShowModal(true);
             };
@@ -161,18 +163,19 @@ const EditContact = ({
         };
     };
 
-    const uploadImage = (contactID) => {
+    const uploadImage = async (contactID) => {
         const storageRef = base.storage().ref();
         const fileRef = storageRef.child(`${userID}/${contactID}/image`);
         if (contactImage) {
             console.log("UPLOADING IMAGE TO SERVER")
-             fileRef.put(contactImage);
+            await fileRef.put(contactImage);
             return  new Promise(resolve => resolve(true));
         } else if (!userImagePreview.length && !contactImage) {
+            console.log("USER PREVIEW AND CONTACT IMAGE ARE EMPTY")
             return new Promise(resolve => resolve(false));
         } else if (!userImagePreview.length) {
             console.log("DELETING IMAGE FROM SERVER")
-            fileRef.delete();
+            await fileRef.delete();
             return new Promise(resolve => resolve(false));
         };
     };
