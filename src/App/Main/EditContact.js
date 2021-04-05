@@ -11,10 +11,11 @@ import './CreateContact.css';
 const EditContact = ({
     userID,
     updateDataFromServer,
-    clearSelectedContact,
     exitEditMode,
     selectedUser,
-    selectedContactImage
+    selectedContactImage,
+    markSelected,
+    clearSelectedContact
 }) => {
 
     const [finishStatus, setFinishStatus] = useState(true);
@@ -92,8 +93,11 @@ const EditContact = ({
         setShowModal(false);
         setFinishStatus(true);
         exitEditMode();
-        updateDataFromServer(userID);
-        // clearSelectedContact();
+        clearSelectedContact();
+        updateDataFromServer(userID).then(() => {
+            markSelected(selectedUser.id);
+            console.log("DATA UPDATED FROM SERVER")
+        });
     };
 
     const uploadingError = () => {
@@ -163,11 +167,11 @@ const EditContact = ({
             console.log("UPLOADING IMAGE TO SERVER")
              fileRef.put(contactImage);
             return  new Promise(resolve => resolve(true));
+        } else if (!userImagePreview.length && !contactImage) {
+            return new Promise(resolve => resolve(false));
         } else if (!userImagePreview.length) {
             console.log("DELETING IMAGE FROM SERVER")
             fileRef.delete();
-            return new Promise(resolve => resolve(false));
-        } else {
             return new Promise(resolve => resolve(false));
         };
     };
@@ -237,7 +241,7 @@ const EditContact = ({
         });
         setUserImagePreview(selectedContactImage);
 
-
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [])
 
     return (

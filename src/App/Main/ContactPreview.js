@@ -98,7 +98,8 @@ class ContactPreview extends Component {
     render() {
         const {
             selectedUser,
-            contactImage
+            contactImage,
+            markSelected
         } = this.props
         return (
             <div className="contact-preview-section shadow">
@@ -112,6 +113,7 @@ class ContactPreview extends Component {
                                             exitEditMode={this.exitEditMode}
                                             selectedUser={selectedUser}
                                             selectedContactImage={contactImage}
+                                            markSelected={markSelected}
                                         />
                                     </>
                                 :
