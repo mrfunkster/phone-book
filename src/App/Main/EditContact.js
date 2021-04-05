@@ -118,6 +118,7 @@ const EditContact = ({
                 notifications: userContactData.notifications,
                 id: selectedUser.id
             };
+            setSuccess(true);
             setIsUploading(true);
             try {
                 uploadImage(dataObject.id)
@@ -129,7 +130,7 @@ const EditContact = ({
                     };
                 })
                 .then(() => {
-                    return base.database().ref('users/' + userID + '/userPhoneBook/' + dataObject.id).update(dataObject);
+                    base.database().ref('users/' + userID + '/userPhoneBook/' + dataObject.id).update(dataObject);
                 })
                 .then(() => setShowModal(true));
             } catch (error) {
@@ -245,32 +246,28 @@ const EditContact = ({
     }, [])
 
     return (
-        <div className="create-contact-section" style={{width: "100%", position: "relative", padding: "0", borderRadius: "unset"}}>
-            <button className="btn btn-primary"
-                style={{position: "absolute", top: 0, left: 0}}
-                onClick={() => exitEditMode()}
-            >Back</button>
+        <>
             {
                 isUploading &&
-                <div className="modal-overlay">
+                <div className="preview-modal">
                     {
                         !showModal ?
-                        <>
+                        <div className="modal-info">
                             <div className="spinner-border text-success" role="status">
                                 <span className="visually-hidden">Loading...</span>
                             </div>
-                            <span>Creating a new contact...</span>
-                        </>
+                            <span>Updating contact...</span>
+                        </div>
                         : success ?
-                        <>
-                            <span style={{color: "#198754", fontSize: "30px", fontWeight: 600}}>Well Done!</span>
-                            <span>Youre contact is successfuly created!</span>
+                        <div className="modal-info">
+                            <span style={{color: "#198754", fontSize: "30px", fontWeight: 600}}>Congratulations!</span>
+                            <p>Youre contact is successfuly updated!</p>
                             <br/>
                             <button 
                                 className="btn btn-success"
                                 onClick={() => successRedirect()}
                             >Ok</button>
-                        </>
+                        </div>
                         :
                         <>
                         <span style={{color: "#dc3545", fontSize: "30px", fontWeight: 600}}>Ooops!</span>
@@ -284,104 +281,109 @@ const EditContact = ({
                     }
                 </div>
             }
-            <div className="contact-image create"
-                onClick={() => userImagePreview ? clearContactImage() : addContactImage()}
-            >
-                <div className="overlay">
-                    <div className="add-remove-button">{userImagePreview ? "Remove Photo" : "Add Photo"}</div>
-                </div>
-                {
-                    userImagePreview ? 
-                        <>
-                            <img src={userImagePreview} alt="Contact Preview"/>
-                        </>
-                    : <div className="name-preview">{(userContactData.firstName || userContactData.lastName) ? namePreview(userContactData) : "?"}</div>
-                }
-            </div>
-            <form onSubmit={submitForm} style={{width: "100%"}}>
-                <input type="file"
-                    name="picture"
-                    onChange={imageHandler}
-                    ref={selectImage}
-                    style={{display: "none"}}
-                    disabled={isUploading}
-                />
-                <div className="contact-header"><span>{`${capitalizeFirstLetter(userContactData.firstName)} ${capitalizeFirstLetter(userContactData.lastName)}`}</span></div>
-                <div className="input-field">
-                    <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                        First Name:
+            <div className="create-contact-section" style={{width: "100%", position: "relative", padding: "0", borderRadius: "unset"}}>
+                <div className="text-primary back-btn"
+                    onClick={() => exitEditMode()}
+                >Back</div>
+                <div className="contact-image create"
+                    onClick={() => userImagePreview ? clearContactImage() : addContactImage()}
+                >
+                    <div className="overlay">
+                        <div className="add-remove-button">{userImagePreview ? "Remove Photo" : "Add Photo"}</div>
                     </div>
-                    <div className={errorObject.firstName ? classNames.inputError : classNames.input}>
-                        <input type="text"
-                            placeholder="First Name"
-                            value={userContactData.firstName}
-                            onChange={inputHandler}
-                            name="firstName"
-                            disabled={isUploading}
-                            onFocus={() => setErrorObject(prevState => ({...prevState, firstName: false}))}
-                        />
-                    </div>
-                </div>
-                <div className="input-field">
-                    <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                        Last Name:
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
-                        <input type="text"
-                            placeholder="Last Name"
-                            value={userContactData.lastName}
-                            onChange={inputHandler}
-                            name="lastName"
-                            disabled={isUploading}
-                        />
-                    </div>
-                </div>
-                <div className="input-field">
-                    <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                        Phone:
-                    </div>
-                    <div className={errorObject.phone ? classNames.inputError : classNames.input}>
-                        <input type="text"
-                            placeholder="Phone"
-                            value={userContactData.phone}
-                            onChange={inputHandler}
-                            name="phone"
-                            disabled={isUploading}
-                            onFocus={() => setErrorObject(prevState => ({...prevState, phone: false}))}
-                        />
-                    </div>
-                </div>
-                <div className="input-field">
-                    <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                        E-mail:
-                    </div>
-                    <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
-                        <input type="email"
-                            placeholder="Email"
-                            value={userContactData.email}
-                            onChange={inputHandler}
-                            name="email"
-                            disabled={isUploading}
-                        />
-                    </div>
-                </div>
-                <div className="input-field buttons">
                     {
-                        !finishStatus && 
-                        <div 
-                            className="btn btn-danger create-btn"
-                            onClick={resetForm}
-                            disabled={isUploading}
-                        >Reset</div>
+                        userImagePreview ? 
+                            <>
+                                <img src={userImagePreview} alt="Contact Preview"/>
+                            </>
+                        : <div className="name-preview">{(userContactData.firstName || userContactData.lastName) ? namePreview(userContactData) : "?"}</div>
                     }
-                    <button 
-                        className="btn btn-success create-btn"
-                        disabled={finishStatus || isUploading}
-                    >Update Contact</button>
                 </div>
-            </form>
-            <ScrollToTopOnMount />
-        </div>
+                <form onSubmit={submitForm} style={{width: "100%"}}>
+                    <input type="file"
+                        name="picture"
+                        onChange={imageHandler}
+                        ref={selectImage}
+                        style={{display: "none"}}
+                        disabled={isUploading}
+                    />
+                    <div className="contact-header"><span>{`${capitalizeFirstLetter(userContactData.firstName)} ${capitalizeFirstLetter(userContactData.lastName)}`}</span></div>
+                    <div className="input-field">
+                        <div className="col-sm-12 col-md-6 col-lg-6 input-description">
+                            First Name:
+                        </div>
+                        <div className={errorObject.firstName ? classNames.inputError : classNames.input}>
+                            <input type="text"
+                                placeholder="First Name"
+                                value={userContactData.firstName}
+                                onChange={inputHandler}
+                                name="firstName"
+                                disabled={isUploading}
+                                onFocus={() => setErrorObject(prevState => ({...prevState, firstName: false}))}
+                            />
+                        </div>
+                    </div>
+                    <div className="input-field">
+                        <div className="col-sm-12 col-md-6 col-lg-6 input-description">
+                            Last Name:
+                        </div>
+                        <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
+                            <input type="text"
+                                placeholder="Last Name"
+                                value={userContactData.lastName}
+                                onChange={inputHandler}
+                                name="lastName"
+                                disabled={isUploading}
+                            />
+                        </div>
+                    </div>
+                    <div className="input-field">
+                        <div className="col-sm-12 col-md-6 col-lg-6 input-description">
+                            Phone:
+                        </div>
+                        <div className={errorObject.phone ? classNames.inputError : classNames.input}>
+                            <input type="text"
+                                placeholder="Phone"
+                                value={userContactData.phone}
+                                onChange={inputHandler}
+                                name="phone"
+                                disabled={isUploading}
+                                onFocus={() => setErrorObject(prevState => ({...prevState, phone: false}))}
+                            />
+                        </div>
+                    </div>
+                    <div className="input-field">
+                        <div className="col-sm-12 col-md-6 col-lg-6 input-description">
+                            E-mail:
+                        </div>
+                        <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
+                            <input type="email"
+                                placeholder="Email"
+                                value={userContactData.email}
+                                onChange={inputHandler}
+                                name="email"
+                                disabled={isUploading}
+                            />
+                        </div>
+                    </div>
+                    <div className="input-field buttons">
+                        {
+                            !finishStatus && 
+                            <div 
+                                className="btn btn-danger create-btn"
+                                onClick={resetForm}
+                                disabled={isUploading}
+                            >Reset</div>
+                        }
+                        <button 
+                            className="btn btn-success create-btn"
+                            disabled={finishStatus || isUploading}
+                        >Update Contact</button>
+                    </div>
+                </form>
+                <ScrollToTopOnMount />
+            </div>
+        </>
     );
 };
 

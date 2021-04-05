@@ -12,6 +12,13 @@
     position: absolute;
     top: 15px;
     right: 15px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
+}
+.contact-preview-section .edit-btn:hover,
+.create-contact-section .back-btn:hover {
+    color: royalblue!important;
 }
 .contact-image {
     width: 8rem;
@@ -105,4 +112,12 @@
     margin: 15px;
     border-radius: 10px;
     background-color: white;
+}
+.create-contact-section .back-btn {
+    position: absolute;
+    top: 0;
+    left: 0;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: 600;
 }

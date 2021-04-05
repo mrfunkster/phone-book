@@ -151,9 +151,9 @@ class ContactPreview extends Component {
                                             }
                                         </div>
                                     }
-                                    <button className="btn btn-primary edit-btn"
+                                    <div className="text-primary edit-btn"
                                         onClick={() => this.enterEditMode()}
-                                    >Edit</button>
+                                    >Edit</div>
                                     <div className="contact-image">
                                         {
                                             contactImage ?
@@ -197,6 +197,7 @@ class ContactPreview extends Component {
                                             </div>
                                     }
                                     <button className="btn btn-danger delete-btn"
+                                        style={{marginTop: "15px", marginBottom: "15px"}}
                                         onClick={() => this.openDeleteModal()}
                                     >Delete Contact</button>
                                 </>
