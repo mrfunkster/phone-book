@@ -32,10 +32,10 @@ const MainContent = ({
                         <div className="col-sm-12 col-md-8 col-lg-8">
                             {
                                 contactsLoader ? 
-                                    <div class="d-flex flex-column align-items-center">
+                                    <div className="d-flex flex-column align-items-center">
                                         <span style={{fontSize: "22px", padding: "15px"}}>Please wait, your PhoneBook is loading now...</span>
-                                        <div class="spinner-border text-primary" role="status">
-                                            <span class="visually-hidden">Loading...</span>
+                                        <div className="spinner-border text-primary" style={{width: "4rem", height: "4rem"}} role="status">
+                                            <span className="visually-hidden">Loading...</span>
                                         </div>
                                     </div>
                                 : <ContactList />
@@ -57,7 +57,7 @@ const MainContent = ({
 };
 
 const mapStateToProps = state => ({
-    phoneContacts: Object.values(state.app.userData.userPhoneBook),
+    phoneContacts: state.app.userData.userPhoneBook ? Object.values(state.app.userData.userPhoneBook) : [],
     contactsLoader: state.app.contactsLoader
 });
 

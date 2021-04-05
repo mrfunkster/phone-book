@@ -6,10 +6,14 @@ import history from '../../common/components/history';
 import { logOut } from '../../common/store/action';
 
 const contactsCount = (obj) => {
-    if(Object.keys(obj).length) {
-        return `(${Object.keys(obj).length})`;
+    if(obj) {
+        if(Object.keys(obj).length) {
+            return `(${Object.keys(obj).length})`;
+        } else {
+            return "";
+        };
     } else {
-        return ""
+        return "";
     };
 };
 

@@ -93,6 +93,10 @@
     justify-content: center;
 }
 
+.form-error {
+    border: 2px solid #dc3545;
+}
+
 @media(max-width: 768px) {
     .create-contact-section .input-field {
         display: block;

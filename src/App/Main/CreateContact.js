@@ -8,13 +8,13 @@ import { capitalizeFirstLetter, namePreview } from '../../common/components/comm
 import { clearSelectedContact, updateDataFromServer } from '../../common/store/action';
 
 import './CreateContact.css';
+import { uniqueId } from 'lodash';
 
 const CreateContact = ({
     userID,
     updateDataFromServer,
     clearSelectedContact
 }) => {
-
     const [finishStatus, setFinishStatus] = useState(true);
     const [contactImage, setContactImage] = useState(null);
     const [isUploading, setIsUploading] = useState(false);
@@ -27,8 +27,17 @@ const CreateContact = ({
         phone: "",
         email: "",
         image: false,
-        notifications: ""
+        notifications: "",
+        id: ""
     });
+    const classNames = {
+        input: "col-sm-12 col-md-6 col-lg-6 form-input shadow",
+        inputError: "col-sm-12 col-md-6 col-lg-6 form-input shadow form-error"
+    }
+    const [errorObject, setErrorObject] = useState({
+        firstName: false,
+        phone: false,
+    })
     const selectImage = useRef();
 
     const inputHandler = e => {
@@ -93,20 +102,32 @@ const CreateContact = ({
 
     const submitForm = (e) => {
         e.preventDefault();
-        setIsUploading(true);
-        try {
-            uploadImage()
-            .then(() => {
-                setUserContactData(prevState => ({
-                    ...prevState,
-                    image: true
-                }));
-            })
-            .then(() => setShowModal(true));
-        } catch (error) {
-            console.log(error.code)
-            setSuccess(false);
-            setShowModal(true);
+        if (formValidator() === 0) {
+            let dataObject = {
+                firstName: capitalizeFirstLetter(userContactData.firstName),
+                lastName: capitalizeFirstLetter(userContactData.lastName),
+                phone: userContactData.phone,
+                email: userContactData.email,
+                image: userContactData.image,
+                notifications: userContactData.notifications,
+                id: uniqueId('contact-')
+            };
+            console.log("We can start uploading now!");
+            setIsUploading(true);
+            try {
+                uploadImage(dataObject.id)
+                .then((res) => {
+                    dataObject.image = res;
+                })
+                .then(() => {
+                    return base.database().ref('users/' + userID + '/userPhoneBook/' + dataObject.id).set(dataObject);
+                })
+                .then(() => setShowModal(true));
+            } catch (error) {
+                console.log(error.code)
+                setSuccess(false);
+                setShowModal(true);
+            };
         };
     };
 
@@ -120,15 +141,25 @@ const CreateContact = ({
                 phone: "",
                 email: "",
                 image: false,
-                notifications: ""
+                notifications: "",
+                id: ""
+            });
+            setErrorObject({
+                firstName: false,
+                phone: false
             });
         };
     };
 
-    const uploadImage = () => {
-        const storageRef = base.storage().ref();
-        const fileRef = storageRef.child(`${userID}/${userContactData.phone}/image`);
-        return fileRef.put(contactImage);
+    const uploadImage = async (contactID) => {
+        if (contactImage) {
+            const storageRef = base.storage().ref();
+            const fileRef = storageRef.child(`${userID}/${contactID}/image`);
+            await fileRef.put(contactImage);
+            return await new Promise(resolve => resolve(true));
+        } else {
+            return new Promise(resolve => resolve(false));
+        };
     };
 
     const onBackButtonEvent = e => {
@@ -142,6 +173,30 @@ const CreateContact = ({
                 setFinishStatus(false);
             };
         };
+    };
+
+    const formValidator = () => {
+        let error = 0;
+        if (!userContactData.firstName && !userContactData.phone) {
+            setErrorObject({
+                firstName: true,
+                phone: true
+            });
+            error++;
+        } else if (!userContactData.firstName) {
+            setErrorObject(prevState => ({
+                ...prevState,
+                firstName: true
+            }));
+            error++;
+        } else if (!userContactData.phone) {
+            setErrorObject(prevState => ({
+                ...prevState,
+                phone: true
+            }));
+            error++;
+        };
+        return error;
     };
 
     useEffect(() => {
@@ -235,13 +290,14 @@ const CreateContact = ({
                             <div className="col-sm-12 col-md-6 col-lg-6 input-description">
                                 First Name:
                             </div>
-                            <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
+                            <div className={errorObject.firstName ? classNames.inputError : classNames.input}>
                                 <input type="text"
                                     placeholder="First Name"
                                     value={userContactData.firstName}
                                     onChange={inputHandler}
                                     name="firstName"
                                     disabled={isUploading}
+                                    onFocus={() => setErrorObject(prevState => ({...prevState, firstName: false}))}
                                 />
                             </div>
                         </div>
@@ -263,14 +319,14 @@ const CreateContact = ({
                             <div className="col-sm-12 col-md-6 col-lg-6 input-description">
                                 Phone:
                             </div>
-                            <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
+                            <div className={errorObject.phone ? classNames.inputError : classNames.input}>
                                 <input type="text"
                                     placeholder="Phone"
                                     value={userContactData.phone}
                                     onChange={inputHandler}
                                     name="phone"
                                     disabled={isUploading}
-                                    required={true}
+                                    onFocus={() => setErrorObject(prevState => ({...prevState, phone: false}))}
                                 />
                             </div>
                         </div>
@@ -291,11 +347,11 @@ const CreateContact = ({
                         <div className="input-field buttons">
                             {
                                 !finishStatus && 
-                                <button 
+                                <div 
                                     className="btn btn-danger create-btn"
                                     onClick={resetForm}
                                     disabled={isUploading}
-                                >Reset</button>
+                                >Reset</div>
                             }
                             <button 
                                 className="btn btn-success create-btn"
