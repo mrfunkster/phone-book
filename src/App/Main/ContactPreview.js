@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formatPhoneNumber, namePreview } from '../../common/components/commonFunctions';
 import base from '../../common/components/firebase';
+import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 import { clearSelectedContact, updateDataFromServer } from '../../common/store/action';
 
 import './ContactPreview.css'
@@ -130,6 +131,7 @@ class ContactPreview extends Component {
                                                                 <span className="visually-hidden">Loading...</span>
                                                             </div>
                                                             <span style={{fontSize: "22px", padding: "15px"}}>Deleting contact...</span>
+                                                            <ScrollToTopOnMount />
                                                         </div>
                                                     </>
                                                 :
@@ -147,6 +149,7 @@ class ContactPreview extends Component {
                                                                 onClick={() => this.deleteContact()}
                                                             >Delete</button>
                                                         </div>
+                                                        <ScrollToTopOnMount />
                                                     </div>
                                             }
                                         </div>

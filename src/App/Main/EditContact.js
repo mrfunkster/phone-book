@@ -270,17 +270,19 @@ const EditContact = ({
                                 className="btn btn-success"
                                 onClick={() => successRedirect()}
                             >Ok</button>
+                            <ScrollToTopOnMount />
                         </div>
                         :
                         <>
-                        <span style={{color: "#dc3545", fontSize: "30px", fontWeight: 600}}>Ooops!</span>
-                        <span>Something go wrong... Please try again!</span>
-                        <br/>
-                        <button 
-                            className="btn btn-danger"
-                            onClick={() => uploadingError()}
-                        >Ok</button>
-                    </>
+                            <span style={{color: "#dc3545", fontSize: "30px", fontWeight: 600}}>Ooops!</span>
+                            <span>Something go wrong... Please try again!</span>
+                            <br/>
+                            <button 
+                                className="btn btn-danger"
+                                onClick={() => uploadingError()}
+                            >Ok</button>
+                            <ScrollToTopOnMount />
+                        </>
                     }
                 </div>
             }
