@@ -13,6 +13,20 @@ main {
     padding: 0!important;
 }
 @media(max-width: 768px) {
+    .main-overlay {
+        position: absolute;
+        width: 100%;
+        height: 100%;
+        background-color: white;
+        z-index: 999;
+        visibility: hidden;
+        opacity: 0;
+        transition: .5s ease-in-out;
+    }
+    .main-overlay.visible {
+        visibility: visible;
+        opacity: 1;
+    }
     .contact-preview-block {
         position: absolute;
         z-index: 1000;
@@ -21,6 +35,7 @@ main {
     }
     .contact-preview-block.visible {
         top: 0;
+        margin-top: 15px;
     }
     .contact-preview-section .back-to-list-btn {
         display: block;

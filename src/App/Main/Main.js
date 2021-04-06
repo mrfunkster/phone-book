@@ -10,12 +10,19 @@ import Registration from './Registration';
 import './Main.css';
 import Account from './Account';
 import CreateContact from './CreateContact';
+import { hideMobilePreview } from '../../common/store/action';
 
 const Main = ({
-    isLogged
+    isLogged,
+    mobilePreview,
+    hideMobilePreview
 }) => {
+
     return (
         <main className="main">
+            <div className={mobilePreview ? "main-overlay visible" : "main-overlay"}
+                onClick={() => hideMobilePreview()}
+            ></div>
             <AnimatePresence exitBeforeEnter>
                 <Switch>
                     <Route path="/" exact>
@@ -40,9 +47,15 @@ const Main = ({
 };
 
 const mapStateToProps = state => ({
-    isLogged: state.app.isLogged
+    isLogged: state.app.isLogged,
+    mobilePreview: state.app.mobilePreview
 });
 
+const mapDispatchToProps = {
+    hideMobilePreview
+};
+
 export default connect(
-    mapStateToProps
+    mapStateToProps,
+    mapDispatchToProps
 )(Main);
