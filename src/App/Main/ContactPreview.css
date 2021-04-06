@@ -72,6 +72,8 @@
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 .contact-info .description {
     font-size: .85rem;

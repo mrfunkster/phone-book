@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { m, motion } from 'framer-motion';
+import { motion } from 'framer-motion';
 import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 import history from '../../common/components/history';
 import base from '../../common/components/firebase';
@@ -36,12 +36,13 @@ const CreateContact = ({
         input: "col-sm-12 col-md-6 col-lg-6 form-input shadow",
         inputError: "col-sm-12 col-md-6 col-lg-6 form-input shadow form-error",
         inputSuccess: "col-sm-12 col-md-6 col-lg-6 form-input shadow success"
-    }
+    };
     const [errorObject, setErrorObject] = useState({
         firstName: false,
         phone: false,
         incorrectPhone: false
-    })
+    });
+
     const selectImage = useRef();
 
     const inputHandler = e => {
@@ -201,7 +202,6 @@ const CreateContact = ({
     };
 
     const validatePhoneNumber = () => {
-        console.log(typeof userContactData.phone)
         if (!userContactData.phone.length) {
             setErrorObject(prevState => ({
                 ...prevState,
@@ -350,7 +350,7 @@ const CreateContact = ({
                                             left: 0,
                                             bottom: '-25px'
                                     }}
-                                    >Enter a correct phone number!</span>
+                                    >First Name is required!</span>
                                 }
                             </div>
                         </div>
