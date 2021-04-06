@@ -151,26 +151,26 @@ const EditContact = ({
         };
     };
 
-    const resetForm = () => {
-        if (window.confirm("Are you sure to clean ALL data?")) {
-            setFinishStatus(true);
-            clearContactImage();
-            setUserContactData({
-                firstName: "",
-                lastName: "",
-                phone: "",
-                email: "",
-                image: false,
-                notifications: "",
-                id: ""
-            });
-            setErrorObject({
-                firstName: false,
-                phone: false,
-                incorrectPhone: false
-            });
-        };
-    };
+    // const resetForm = () => {
+    //     if (window.confirm("Are you sure to clean ALL data?")) {
+    //         setFinishStatus(true);
+    //         clearContactImage();
+    //         setUserContactData({
+    //             firstName: "",
+    //             lastName: "",
+    //             phone: "",
+    //             email: "",
+    //             image: false,
+    //             notifications: "",
+    //             id: ""
+    //         });
+    //         setErrorObject({
+    //             firstName: false,
+    //             phone: false,
+    //             incorrectPhone: false
+    //         });
+    //     };
+    // };
 
     const uploadImage = async (contactID) => {
         const storageRef = base.storage().ref();
@@ -365,7 +365,11 @@ const EditContact = ({
                                 onChange={inputHandler}
                                 name="firstName"
                                 disabled={isUploading}
-                                onFocus={() => setErrorObject(prevState => ({...prevState, firstName: false}))}
+                                onFocus={e => {
+                                    setErrorObject(prevState => ({...prevState, firstName: false}));
+                                    let value = e.target.value;
+                                    e.target.value = value;
+                                }}
                                 onBlur={() => validateFirstName()}
                             />
                                 {
@@ -391,6 +395,10 @@ const EditContact = ({
                                 onChange={inputHandler}
                                 name="lastName"
                                 disabled={isUploading}
+                                onFocus={e => {
+                                    let value = e.target.value;
+                                    e.target.value = value;
+                                }}
                             />
                         </div>
                     </div>
@@ -407,7 +415,11 @@ const EditContact = ({
                                 onChange={inputHandler}
                                 name="phone"
                                 disabled={isUploading}
-                                onFocus={() => setErrorObject(prevState => ({...prevState, phone: false, incorrectPhone: false}))}
+                                onFocus={e => {
+                                    setErrorObject(prevState => ({...prevState, phone: false, incorrectPhone: false}));
+                                    let value = e.target.value;
+                                    e.target.value = value;
+                                }}
                                 onBlur={() => validatePhoneNumber()}
                                 options={{
                                     blocks: [0,3,0,2,0,3,2,2], 
@@ -448,18 +460,14 @@ const EditContact = ({
                                 onChange={inputHandler}
                                 name="email"
                                 disabled={isUploading}
+                                onFocus={e => {
+                                    let value = e.target.value;
+                                    e.target.value = value;
+                                }}
                             />
                         </div>
                     </div>
-                    <div className="input-field buttons" style={{marginBottom: '15px'}}>
-                        {
-                            !finishStatus && 
-                            <div 
-                                className="btn btn-danger create-btn"
-                                onClick={resetForm}
-                                disabled={isUploading}
-                            >Reset</div>
-                        }
+                    <div className="input-field buttons" style={{marginBottom: '15px', display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                         <button 
                             className="btn btn-success create-btn"
                             disabled={finishStatus || isUploading}

@@ -37,7 +37,8 @@ class MainContent extends Component {
     render() {
         const {
             phoneContacts,
-            contactsLoader
+            contactsLoader,
+            mobilePreview
         } = this.props;
         return (
             <motion.div className="container"
@@ -55,7 +56,7 @@ class MainContent extends Component {
                     {
                         phoneContacts.length ? 
                         <>
-                            <div className="col-sm-12 col-md-4 col-lg-4">
+                            <div className={mobilePreview ? "col-sm-12 col-md-4 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-4 col-lg-4 contact-preview-block"}>
                                 <ContactPreview 
                                     markSelected={this.markSelected}
                                 />
@@ -94,7 +95,8 @@ const mapStateToProps = state => ({
     phoneContacts: state.app.userData.userPhoneBook ? Object.values(state.app.userData.userPhoneBook) : [],
     contactsList: state.app.phoneContacts,
     contactsLoader: state.app.contactsLoader,
-    userID: state.app.userID
+    userID: state.app.userID,
+    mobilePreview: state.app.mobilePreview
 });
 
 const mapDispatchToProps = {

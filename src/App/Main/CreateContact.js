@@ -266,7 +266,8 @@ const CreateContact = ({
         >
             <div className="row">
                 <div className="col">
-                    <h2 className="text-centered">CreateContact</h2>
+                    <h2 className="text-centered">Create New Contact</h2>
+                    <p className="text-center">Lets create a <span className="text-success">new</span> contact in your PhoneBook</p>
                 </div>
             </div>
             <div className="row">
@@ -328,104 +329,133 @@ const CreateContact = ({
                             disabled={isUploading}
                         />
                         <div className="contact-header"><span>{`${capitalizeFirstLetter(userContactData.firstName)} ${capitalizeFirstLetter(userContactData.lastName)}`}</span></div>
-                        <div className="input-field">
-                            <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                                First Name<span className="text-danger">*</span>:
+                        <div className="row">
+                            <div className="col-sm-12 col-md-8 col-lg-8 shadow input-fields-section">
+                                <div className="input-field">
+                                    <div className="col-sm-12 col-md-6 col-lg-6 input-description">
+                                        First Name<span className="text-danger">*</span>:
+                                    </div>
+                                    <div className={(userContactData.firstName.length && !errorObject.firstName) ? classNames.inputSuccess : errorObject.firstName ? classNames.inputError : classNames.input} style={{position: 'relative'}}>
+                                        <input type="text"
+                                            placeholder="First Name"
+                                            value={userContactData.firstName}
+                                            onChange={inputHandler}
+                                            name="firstName"
+                                            disabled={isUploading}
+                                            onFocus={(e) => {
+                                                setErrorObject(prevState => ({...prevState, firstName: false}));
+                                                let value = e.target.value;
+                                                e.target.value = value;
+                                            }}
+                                            onBlur={() => validateFirstName()}
+                                        />
+                                        {
+                                            errorObject.firstName &&
+                                            <span className="text-danger"
+                                                style={{
+                                                    position: 'absolute',
+                                                    left: 0,
+                                                    bottom: '-25px'
+                                            }}
+                                            >First Name is required!</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="input-field">
+                                    <div className="col-sm-12 col-md-6 col-lg-6 input-description">
+                                        Last Name:
+                                    </div>
+                                    <div className={userContactData.lastName.length ? classNames.inputSuccess : classNames.input}>
+                                        <input type="text"
+                                            placeholder="Last Name"
+                                            value={userContactData.lastName}
+                                            onChange={inputHandler}
+                                            name="lastName"
+                                            disabled={isUploading}
+                                            onFocus={e => {
+                                                let value = e.target.value;
+                                                e.target.value = value;
+                                            }}
+                                        />
+                                    </div>
+                                </div>
+                                <div className="input-field">
+                                    <div className="col-sm-12 col-md-6 col-lg-6 input-description">
+                                        Phone<span className="text-danger">*</span>:
+                                    </div>
+                                    <div className={userContactData.phone.length === 12  ? classNames.inputSuccess : errorObject.phone ? classNames.inputError : classNames.input } style={{position: "relative"}}>
+                                        <Cleave type="tel"
+                                            inputMode="tel"
+                                            autoComplete="cc-tel"
+                                            placeholder="+380 (XX) XXX XX XX"
+                                            value={userContactData.phone}
+                                            onChange={inputHandler}
+                                            name="phone"
+                                            disabled={isUploading}
+                                            onFocus={(e) => {
+                                                setErrorObject(prevState => ({...prevState, phone: false, incorrectPhone: false}));
+                                                let value = e.target.value;
+                                                e.target.value = value;
+                                            }}
+                                            onBlur={() => validatePhoneNumber()}
+                                            options={{
+                                                blocks: [0,3,0,2,0,3,2,2], 
+                                                delimiters: ['+',' ','(', ')', ' '], 
+                                                numericOnly: true
+                                            }}
+                                        />
+                                        {
+                                            errorObject.incorrectPhone &&
+                                            <span className="text-danger"
+                                                style={{
+                                                    position: 'absolute',
+                                                    left: 0,
+                                                    bottom: '-25px'
+                                            }}
+                                            >Enter a correct phone number!</span>
+                                        }
+                                        {
+                                            (errorObject.phone && !errorObject.incorrectPhone) &&
+                                            <span className="text-danger"
+                                                style={{
+                                                    position: 'absolute',
+                                                    left: 0,
+                                                    bottom: '-25px'
+                                            }}
+                                            >Phone number is required!</span>
+                                        }
+                                    </div>
+                                </div>
+                                <div className="input-field">
+                                    <div className="col-sm-12 col-md-6 col-lg-6 input-description">
+                                        E-mail:
+                                    </div>
+                                    <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
+                                        <input type="email"
+                                            placeholder="example@mail.com"
+                                            value={userContactData.email}
+                                            onChange={inputHandler}
+                                            name="email"
+                                            disabled={isUploading}
+                                            onFocus={e => {
+                                                let value = e.target.value;
+                                                e.target.value = value;
+                                            }}
+                                        />
+                                    </div>
+                                </div>
                             </div>
-                            <div className={(userContactData.firstName.length && !errorObject.firstName) ? classNames.inputSuccess : errorObject.firstName ? classNames.inputError : classNames.input} style={{position: 'relative'}}>
-                                <input type="text"
-                                    placeholder="First Name"
-                                    value={userContactData.firstName}
-                                    onChange={inputHandler}
-                                    name="firstName"
-                                    disabled={isUploading}
-                                    onFocus={() => setErrorObject(prevState => ({...prevState, firstName: false}))}
-                                    onBlur={() => validateFirstName()}
-                                />
-                                {
-                                    errorObject.firstName &&
-                                    <span className="text-danger"
-                                        style={{
-                                            position: 'absolute',
-                                            left: 0,
-                                            bottom: '-25px'
-                                    }}
-                                    >First Name is required!</span>
-                                }
+                            <div className="col-sm-12 col-md-4 col-lg-4 create-form-description">
+                                <h4 className="text-center text-success">A New Contact</h4>
+                                <p>To create a new contact, you must follow a few simple steps:</p>
+                                <p>1. Your Contact <span className="text-danger">must</span> contain a <span className="text-success">First Name</span>.</p>
+                                <p>2. Your Contact <span className="text-danger">must</span> contain a <span className="text-success">Phone Number</span>.</p>
+                                <p>3. Last Name and Email are <span className="text-primary">optional</span>.</p>
+                                <p>4. Also, you can add a <span className="text-success">photo</span> to your Contact Card, simply clicked on circle in a top of the Contact Form</p>
+                                <p>5. Have a <span className="text-success">fun!</span></p>
                             </div>
                         </div>
-                        <div className="input-field">
-                            <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                                Last Name:
-                            </div>
-                            <div className={userContactData.lastName.length ? classNames.inputSuccess : classNames.input}>
-                                <input type="text"
-                                    placeholder="Last Name"
-                                    value={userContactData.lastName}
-                                    onChange={inputHandler}
-                                    name="lastName"
-                                    disabled={isUploading}
-                                />
-                            </div>
-                        </div>
-                        <div className="input-field">
-                            <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                                Phone<span className="text-danger">*</span>:
-                            </div>
-                            <div className={userContactData.phone.length === 12  ? classNames.inputSuccess : errorObject.phone ? classNames.inputError : classNames.input } style={{position: "relative"}}>
-                                <Cleave type="tel"
-                                    inputMode="tel"
-                                    autoComplete="cc-tel"
-                                    placeholder="+380 (XX) XXX XX XX"
-                                    value={userContactData.phone}
-                                    onChange={inputHandler}
-                                    name="phone"
-                                    disabled={isUploading}
-                                    onFocus={() => setErrorObject(prevState => ({...prevState, phone: false, incorrectPhone: false}))}
-                                    onBlur={() => validatePhoneNumber()}
-                                    options={{
-                                        blocks: [0,3,0,2,0,3,2,2], 
-                                        delimiters: ['+',' ','(', ')', ' '], 
-                                        numericOnly: true
-                                    }}
-                                />
-                                {
-                                    errorObject.incorrectPhone &&
-                                    <span className="text-danger"
-                                        style={{
-                                            position: 'absolute',
-                                            left: 0,
-                                            bottom: '-25px'
-                                    }}
-                                    >Enter a correct phone number!</span>
-                                }
-                                {
-                                    (errorObject.phone && !errorObject.incorrectPhone) &&
-                                    <span className="text-danger"
-                                        style={{
-                                            position: 'absolute',
-                                            left: 0,
-                                            bottom: '-25px'
-                                    }}
-                                    >Phone number is required!</span>
-                                }
-                            </div>
-                        </div>
-                        <div className="input-field">
-                            <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                                E-mail:
-                            </div>
-                            <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
-                                <input type="email"
-                                    placeholder="example@mail.com"
-                                    value={userContactData.email}
-                                    onChange={inputHandler}
-                                    name="email"
-                                    disabled={isUploading}
-                                />
-                            </div>
-                        </div>
-                        <div className="input-field buttons">
+                        <div className="input-field buttons" style={{display: 'flex', alignItems: 'center', justifyContent: 'center'}}>
                             {
                                 !finishStatus && 
                                 <div 

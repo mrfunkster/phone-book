@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import history from '../../common/components/history';
-import { getContactImage, selectUserContact, setContactImage } from '../../common/store/action';
+import { getContactImage, selectUserContact, setContactImage, showMobilePreview } from '../../common/store/action';
 
 import ContactListItem from './ContactListItem';
 import Search from './Search';
@@ -57,7 +57,8 @@ class ContactList extends Component {
             contactsList,
             searchQuery,
             markSelected,
-            selectedContact
+            selectedContact,
+            showMobilePreview
         } = this.props
         return (
             <div className="contact-list-section">
@@ -92,6 +93,7 @@ class ContactList extends Component {
                                             markSelected={markSelected}
                                             searchQuery={searchQuery}
                                             selectedContact={selectedContact}
+                                            showMobilePreview={showMobilePreview}
                                         />
                                 ))
                             }
@@ -117,7 +119,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = {
     selectUserContact,
     getContactImage,
-    setContactImage
+    setContactImage,
+    showMobilePreview
 };
 
 export default connect(

@@ -5,11 +5,15 @@ const ContactListItem = ({
     phoneContacts,
     markSelected,
     searchQuery,
-    selectedContact
+    selectedContact,
+    showMobilePreview
 }) => {
     return (
         <div className={selectedContact.id === phoneContacts.id ? "contact-list-item selected" : searchQuery.length ? "contact-list-item bg-warning" : "contact-list-item"}
-            onClick={() => markSelected(phoneContacts.id)}
+            onClick={() => {
+                markSelected(phoneContacts.id);
+                showMobilePreview();
+            }}
         >
             <div className="first-name">{phoneContacts.firstName}</div>
             <div className="last-name">{phoneContacts.lastName}</div>

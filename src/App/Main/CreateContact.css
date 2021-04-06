@@ -35,6 +35,7 @@
 
 .create-contact-section .input-description {
     font-size: 18px;
+    padding-left: 100px;
 }
 
 .create-contact-section .input-field {
@@ -103,8 +104,34 @@
     border: 2px solid #dc3545;
 }
 
+.create-form-description {
+    padding: 30px;
+}
+.create-contact-section {
+    padding: 15px 30px;
+}
+.input-fields-section {
+    padding: 15px;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
 @media(max-width: 768px) {
+    .create-contact-section {
+        padding: 15px;
+    }
     .create-contact-section .input-field {
         display: block;
+    }
+    .create-form-description {
+        display: none;
+    }
+    .input-fields-section {
+        display: block;
+        box-shadow: none !important;
+    }
+    .create-contact-section .input-description {
+        padding-left: 15px;
     }
 }

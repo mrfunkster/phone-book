@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import { formatPhoneNumber, namePreview } from '../../common/components/commonFunctions';
 import base from '../../common/components/firebase';
 import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
-import { clearSelectedContact, updateDataFromServer } from '../../common/store/action';
+import { clearSelectedContact, hideMobilePreview, updateDataFromServer } from '../../common/store/action';
 
 import './ContactPreview.css'
 import EditContact from './EditContact';
@@ -100,7 +100,8 @@ class ContactPreview extends Component {
         const {
             selectedUser,
             contactImage,
-            markSelected
+            markSelected,
+            hideMobilePreview
         } = this.props
         return (
             <div className="contact-preview-section shadow">
@@ -154,6 +155,9 @@ class ContactPreview extends Component {
                                             }
                                         </div>
                                     }
+                                    <div className="text-primary back-to-list-btn"
+                                        onClick={() => hideMobilePreview()}
+                                    >Back</div>
                                     <div className="text-primary edit-btn"
                                         onClick={() => this.enterEditMode()}
                                     >Edit</div>
@@ -224,7 +228,8 @@ const mapStateToProps = state => ({
 
 const mapDispatchToProps = {
     updateDataFromServer,
-    clearSelectedContact
+    clearSelectedContact,
+    hideMobilePreview
 };
 
 export default connect(
