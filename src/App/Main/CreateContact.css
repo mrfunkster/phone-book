@@ -27,6 +27,10 @@
 
 .create-contact-section .form-input {
     border-radius: 10px;
+    height: 50px;
+}
+.create-contact-section .form-input input {
+    height: 100%;
 }
 
 .create-contact-section .input-description {
@@ -37,23 +41,25 @@
     width: 100%;
     display: flex;
     align-items: center;
-    margin-bottom: 15px;
-}
-.create-contact-section .input-field input {
-    width: 100%;
+    margin-bottom: 30px;
 }
 .create-contact-section .input-field input {
     width: 100%;
     padding: 10px;
     border: none;
     border-radius: 10px;
-    background-color: none;
+    background-color: transparent;
+    outline: none;
 }
 .create-contact-section .input-field input:focus {
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    border: 2px solid #0d6efd!important;
 }
-.create-contact-section .input-field input:focus {
+.create-contact-section .input-field input:disabled {
     box-shadow: none !important;
+}
+.create-contact-section .form-input.success input {
+    border: 2px solid #198754!important;
 }
 .contact-image .overlay {
     width: 100%;

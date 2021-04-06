@@ -1,14 +1,16 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { motion } from 'framer-motion';
+import { m, motion } from 'framer-motion';
 import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 import history from '../../common/components/history';
 import base from '../../common/components/firebase';
+import { uniqueId } from 'lodash';
+import Cleave from 'cleave.js/react';
 import { connect } from 'react-redux';
 import { capitalizeFirstLetter, namePreview } from '../../common/components/commonFunctions';
 import { clearSelectedContact, updateDataFromServer } from '../../common/store/action';
 
 import './CreateContact.css';
-import { uniqueId } from 'lodash';
+
 
 const CreateContact = ({
     userID,
@@ -32,18 +34,24 @@ const CreateContact = ({
     });
     const classNames = {
         input: "col-sm-12 col-md-6 col-lg-6 form-input shadow",
-        inputError: "col-sm-12 col-md-6 col-lg-6 form-input shadow form-error"
+        inputError: "col-sm-12 col-md-6 col-lg-6 form-input shadow form-error",
+        inputSuccess: "col-sm-12 col-md-6 col-lg-6 form-input shadow success"
     }
     const [errorObject, setErrorObject] = useState({
         firstName: false,
         phone: false,
+        incorrectPhone: false
     })
     const selectImage = useRef();
 
     const inputHandler = e => {
+        let value = e.target.value;
+        if (e.target.type === "tel") {
+            value = e.target.rawValue
+        };
         setUserContactData(prevState => ({
             ...prevState,
-            [e.target.name]: e.target.value
+            [e.target.name]: value.replace(/^\s\s*/, '')
         }));
     };
 
@@ -104,12 +112,12 @@ const CreateContact = ({
         e.preventDefault();
         if (formValidator() === 0) {
             let dataObject = {
-                firstName: capitalizeFirstLetter(userContactData.firstName),
-                lastName: capitalizeFirstLetter(userContactData.lastName),
+                firstName: capitalizeFirstLetter(userContactData.firstName).replace(/\s\s*$/, ''),
+                lastName: capitalizeFirstLetter(userContactData.lastName).replace(/\s\s*$/, ''),
                 phone: userContactData.phone,
-                email: userContactData.email,
+                email: userContactData.email.replace(/\s\s*$/, ''),
                 image: userContactData.image,
-                notifications: userContactData.notifications,
+                notifications: userContactData.notifications.replace(/\s\s*$/, ''),
                 id: uniqueId('contact-')
             };
             console.log("We can start uploading now!");
@@ -146,7 +154,8 @@ const CreateContact = ({
             });
             setErrorObject({
                 firstName: false,
-                phone: false
+                phone: false,
+                incorrectPhone: false
             });
         };
     };
@@ -183,20 +192,53 @@ const CreateContact = ({
                 phone: true
             });
             error++;
-        } else if (!userContactData.firstName) {
-            setErrorObject(prevState => ({
-                ...prevState,
-                firstName: true
-            }));
+        } else if (!validateFirstName()) {
             error++;
-        } else if (!userContactData.phone) {
+        } else if (!validatePhoneNumber()) {
+            error++;
+        };
+        return error;
+    };
+
+    const validatePhoneNumber = () => {
+        console.log(typeof userContactData.phone)
+        if (!userContactData.phone.length) {
             setErrorObject(prevState => ({
                 ...prevState,
                 phone: true
             }));
-            error++;
+            return false;
+        } else if (userContactData.phone.length < 12) {
+            setErrorObject(prevState => ({
+                ...prevState,
+                phone: true,
+                incorrectPhone: true
+            }))
+            return false;
+        } else {
+            setErrorObject(prevState => ({
+                ...prevState,
+                phone: false,
+                incorrectPhone: false
+            }));
+            return true;
         };
-        return error;
+    };
+
+    const validateFirstName = () => {
+        if (!userContactData.firstName.length) {
+            setErrorObject(prevState => ({
+                ...prevState,
+                firstName: true
+            }));
+            return false;
+        } else {
+            setErrorObject(prevState => ({
+                ...prevState,
+                firstName: false
+            }));
+            return true;
+        };
     };
 
     useEffect(() => {
@@ -288,9 +330,9 @@ const CreateContact = ({
                         <div className="contact-header"><span>{`${capitalizeFirstLetter(userContactData.firstName)} ${capitalizeFirstLetter(userContactData.lastName)}`}</span></div>
                         <div className="input-field">
                             <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                                First Name:
+                                First Name<span className="text-danger">*</span>:
                             </div>
-                            <div className={errorObject.firstName ? classNames.inputError : classNames.input}>
+                            <div className={(userContactData.firstName.length && !errorObject.firstName) ? classNames.inputSuccess : errorObject.firstName ? classNames.inputError : classNames.input} style={{position: 'relative'}}>
                                 <input type="text"
                                     placeholder="First Name"
                                     value={userContactData.firstName}
@@ -298,14 +340,25 @@ const CreateContact = ({
                                     name="firstName"
                                     disabled={isUploading}
                                     onFocus={() => setErrorObject(prevState => ({...prevState, firstName: false}))}
+                                    onBlur={() => validateFirstName()}
                                 />
+                                {
+                                    errorObject.firstName &&
+                                    <span className="text-danger"
+                                        style={{
+                                            position: 'absolute',
+                                            left: 0,
+                                            bottom: '-25px'
+                                    }}
+                                    >Enter a correct phone number!</span>
+                                }
                             </div>
                         </div>
                         <div className="input-field">
                             <div className="col-sm-12 col-md-6 col-lg-6 input-description">
                                 Last Name:
                             </div>
-                            <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
+                            <div className={userContactData.lastName.length ? classNames.inputSuccess : classNames.input}>
                                 <input type="text"
                                     placeholder="Last Name"
                                     value={userContactData.lastName}
@@ -317,17 +370,45 @@ const CreateContact = ({
                         </div>
                         <div className="input-field">
                             <div className="col-sm-12 col-md-6 col-lg-6 input-description">
-                                Phone:
+                                Phone<span className="text-danger">*</span>:
                             </div>
-                            <div className={errorObject.phone ? classNames.inputError : classNames.input}>
-                                <input type="text"
-                                    placeholder="Phone"
+                            <div className={userContactData.phone.length === 12  ? classNames.inputSuccess : errorObject.phone ? classNames.inputError : classNames.input } style={{position: "relative"}}>
+                                <Cleave type="tel"
+                                    inputMode="tel"
+                                    autoComplete="cc-tel"
+                                    placeholder="+380 (XX) XXX XX XX"
                                     value={userContactData.phone}
                                     onChange={inputHandler}
                                     name="phone"
                                     disabled={isUploading}
-                                    onFocus={() => setErrorObject(prevState => ({...prevState, phone: false}))}
+                                    onFocus={() => setErrorObject(prevState => ({...prevState, phone: false, incorrectPhone: false}))}
+                                    onBlur={() => validatePhoneNumber()}
+                                    options={{
+                                        blocks: [0,3,0,2,0,3,2,2], 
+                                        delimiters: ['+',' ','(', ')', ' '], 
+                                        numericOnly: true
+                                    }}
                                 />
+                                {
+                                    errorObject.incorrectPhone &&
+                                    <span className="text-danger"
+                                        style={{
+                                            position: 'absolute',
+                                            left: 0,
+                                            bottom: '-25px'
+                                    }}
+                                    >Enter a correct phone number!</span>
+                                }
+                                {
+                                    (errorObject.phone && !errorObject.incorrectPhone) &&
+                                    <span className="text-danger"
+                                        style={{
+                                            position: 'absolute',
+                                            left: 0,
+                                            bottom: '-25px'
+                                    }}
+                                    >Phone number is required!</span>
+                                }
                             </div>
                         </div>
                         <div className="input-field">
@@ -336,7 +417,7 @@ const CreateContact = ({
                             </div>
                             <div className="col-sm-12 col-md-6 col-lg-6 form-input shadow">
                                 <input type="email"
-                                    placeholder="Email"
+                                    placeholder="example@mail.com"
                                     value={userContactData.email}
                                     onChange={inputHandler}
                                     name="email"

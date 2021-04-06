@@ -8,6 +8,12 @@ export const formatPhoneNumber = (phone) => {
     };
 };
 
+// export const normalizePhoneNumber = value => {
+//     let phone = value;
+//     phone.
+//     return phone
+// }
+
 export const namePreview = user => {
     let firstName, lastName;
     if(user.firstName.length) {
