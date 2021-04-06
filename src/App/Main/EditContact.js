@@ -297,13 +297,13 @@ const EditContact = ({
                     {
                         !showModal ?
                         <div className="modal-info">
-                            <div className="spinner-border text-success" role="status">
+                            <div className="spinner-border text-success" style={{width: "2.5rem", height: "2.5rem"}} role="status">
                                 <span className="visually-hidden">Loading...</span>
                             </div>
-                            <span>Updating contact...</span>
+                            <span style={{padding: '20px'}}>Updating contact...</span>
                         </div>
                         : success ?
-                        <div className="modal-info">
+                        <div className="modal-info shadow">
                             <span style={{color: "#198754", fontSize: "30px", fontWeight: 600}}>Congratulations!</span>
                             <p>Youre contact is successfuly updated!</p>
                             <br/>
@@ -311,10 +311,9 @@ const EditContact = ({
                                 className="btn btn-success"
                                 onClick={() => successRedirect()}
                             >Ok</button>
-                            <ScrollToTopOnMount />
                         </div>
                         :
-                        <>
+                        <div className="modal-info shadow">
                             <span style={{color: "#dc3545", fontSize: "30px", fontWeight: 600}}>Ooops!</span>
                             <span>Something go wrong... Please try again!</span>
                             <br/>
@@ -322,8 +321,7 @@ const EditContact = ({
                                 className="btn btn-danger"
                                 onClick={() => uploadingError()}
                             >Ok</button>
-                            <ScrollToTopOnMount />
-                        </>
+                        </div>
                     }
                 </div>
             }

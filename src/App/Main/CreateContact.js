@@ -3,7 +3,6 @@ import { motion } from 'framer-motion';
 import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 import history from '../../common/components/history';
 import base from '../../common/components/firebase';
-import { uniqueId } from 'lodash';
 import Cleave from 'cleave.js/react';
 import { connect } from 'react-redux';
 import { capitalizeFirstLetter, namePreview } from '../../common/components/commonFunctions';
@@ -109,6 +108,10 @@ const CreateContact = ({
         setIsUploading(false);
     };
 
+    const uniqueID = () => {
+        return '_' + Math.random().toString(36).substr(2, 9);
+    };
+
     const submitForm = (e) => {
         e.preventDefault();
         if (formValidator() === 0) {
@@ -119,7 +122,7 @@ const CreateContact = ({
                 email: userContactData.email.replace(/\s\s*$/, ''),
                 image: userContactData.image,
                 notifications: userContactData.notifications.replace(/\s\s*$/, ''),
-                id: uniqueId('contact-')
+                id: uniqueID()
             };
             console.log("We can start uploading now!");
             setIsUploading(true);

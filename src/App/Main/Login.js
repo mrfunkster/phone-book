@@ -25,7 +25,7 @@ const Login = ({
                             <p className="text-centered">Please wait...</p>
                             <p className="text-centered">After successfull logining you will be redirect to your PhoneBook page.</p>
                             <div className="login-loader">
-                                <div className="spinner-border text-success " role="status"></div>
+                                <div className="spinner-border text-success" style={{width: "3rem", height: "3rem"}} role="status"></div>
                             </div>
                         </div>
                     : <>
