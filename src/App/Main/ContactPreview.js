@@ -110,13 +110,13 @@ class ContactPreview extends Component {
 
     componentDidMount() {
         this.targetElement = this.targetRef.current;
-        if (this.props.isMobile) {
+        if (this.props.isMobile && this.props.mobilePreview) {
             this.disableScroll();
         };
     };
 
     componentDidUpdate() {
-        if (this.props.isMobile) {
+        if (this.props.isMobile && this.props.mobilePreview) {
             this.disableScroll();
         };
     };
@@ -263,7 +263,8 @@ const mapStateToProps = state => ({
     contactImage: state.app.contactImage,
     userID: state.app.userID,
     isMobile: state.app.isMobile,
-    headerHeight: state.app.headerHeight
+    headerHeight: state.app.headerHeight,
+    mobilePreview: state.app.mobilePreview
 });
 
 const mapDispatchToProps = {
