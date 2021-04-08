@@ -61,7 +61,7 @@ class MainContent extends Component {
                         <>
                             <div className={mobilePreview ? "col-sm-12 col-md-4 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-4 col-lg-4 contact-preview-block"}
                                 style={{
-                                    transform: isMobile ? `translateY(${headerHeight}px)` : 'unset',
+                                    top: isMobile ? `${headerHeight}px` : 'unset',
                                     maxHeight: isMobile ? `calc(100vh - ${headerHeight}px - 15px)` : 'unset'
                                 }}
                             >

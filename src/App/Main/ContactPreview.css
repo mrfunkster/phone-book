@@ -39,11 +39,12 @@ main {
         visibility: hidden;
         left: 0;
         overflow-y: auto;
-        top: -100%;
+        top: 0;
+        transform: translateY(-100%);
     }
     .contact-preview-block.visible {
         visibility: visible;
-        top: 0;
+        transform: translateY(0);
     }
     .contact-preview-section .back-to-list-btn {
         display: block;
