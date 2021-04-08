@@ -1,6 +1,8 @@
 header {
     color: white;
     background-color: #6f42c1;
+    position: sticky!important;
+    top: 0;
 }
 header .container {
     padding: 15px;

@@ -1,3 +1,4 @@
+import { clearAllBodyScrollLocks, disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { formatPhoneNumber, namePreview } from '../../common/components/commonFunctions';
@@ -16,6 +17,9 @@ class ContactPreview extends Component {
         showModal: false,
         isDeleting: false,
     }
+
+    targetRef = this.props.bodyLockRef;
+    targetElement = null;
 
     hideLoader = () => {
         this.setState(prevState => ({
@@ -96,15 +100,46 @@ class ContactPreview extends Component {
         };
     };
 
+    disableScroll = () => {
+        disableBodyScroll(this.targetElement);
+    };
+
+    enableBodyScroll = () => {
+        enableBodyScroll(this.targetElement);
+    };
+
+    componentDidMount() {
+        this.targetElement = this.targetRef.current;
+        if (this.props.isMobile) {
+            this.disableScroll();
+        };
+    };
+
+    componentDidUpdate() {
+        if (this.props.isMobile) {
+            this.disableScroll();
+        };
+    };
+
+    componentWillUnmount() {
+        clearAllBodyScrollLocks();
+    };
+
     render() {
         const {
             selectedUser,
             contactImage,
             markSelected,
-            hideMobilePreview
+            hideMobilePreview,
+            isMobile,
+            headerHeight
         } = this.props
         return (
-            <div className="contact-preview-section shadow">
+            <div className="contact-preview-section shadow" id="contact-preview-section" ref={this.targetRef}
+                style={{
+                    top: !isMobile && headerHeight + 15 + 'px'
+                }}
+            >
                 {
                     Object.entries(selectedUser).length ?
                         <>
@@ -156,7 +191,10 @@ class ContactPreview extends Component {
                                         </div>
                                     }
                                     <div className="text-primary back-to-list-btn"
-                                        onClick={() => hideMobilePreview()}
+                                        onClick={() => {
+                                            hideMobilePreview();
+                                            this.enableBodyScroll();
+                                        }}
                                     >Back</div>
                                     <div className="text-primary edit-btn"
                                         onClick={() => this.enterEditMode()}
@@ -223,8 +261,10 @@ class ContactPreview extends Component {
 const mapStateToProps = state => ({
     selectedUser: state.app.selectedUser,
     contactImage: state.app.contactImage,
-    userID: state.app.userID
-})
+    userID: state.app.userID,
+    isMobile: state.app.isMobile,
+    headerHeight: state.app.headerHeight
+});
 
 const mapDispatchToProps = {
     updateDataFromServer,

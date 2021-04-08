@@ -6,7 +6,7 @@ import HeaderMenu from './HeaderMenu';
 
 const Header = () => {
     return (
-        <header className="shadow">
+        <header className="shadow" id="header">
             <div className="container">
                 <div className="row">
                     <div className="header-title">

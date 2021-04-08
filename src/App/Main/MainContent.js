@@ -38,7 +38,10 @@ class MainContent extends Component {
         const {
             phoneContacts,
             contactsLoader,
-            mobilePreview
+            mobilePreview,
+            headerHeight,
+            isMobile,
+            bodyLockRef
         } = this.props;
         return (
             <motion.div className="container"
@@ -52,13 +55,19 @@ class MainContent extends Component {
                         <h2 className="text-centered main-content-title">My PhoneBook</h2>
                     </div>
                 </div>
-                <div className="row">
+                <div className="row float">
                     {
                         phoneContacts.length ? 
                         <>
-                            <div className={mobilePreview ? "col-sm-12 col-md-4 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-4 col-lg-4 contact-preview-block"}>
+                            <div className={mobilePreview ? "col-sm-12 col-md-4 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-4 col-lg-4 contact-preview-block"}
+                                style={{
+                                    transform: isMobile ? `translateY(${headerHeight}px)` : 'unset',
+                                    maxHeight: isMobile ? `calc(100vh - ${headerHeight}px - 15px)` : 'unset'
+                                }}
+                            >
                                 <ContactPreview 
                                     markSelected={this.markSelected}
+                                    bodyLockRef={bodyLockRef}
                                 />
                             </div>
                             <div className="col-sm-12 col-md-8 col-lg-8">
@@ -96,7 +105,9 @@ const mapStateToProps = state => ({
     contactsList: state.app.phoneContacts,
     contactsLoader: state.app.contactsLoader,
     userID: state.app.userID,
-    mobilePreview: state.app.mobilePreview
+    mobilePreview: state.app.mobilePreview,
+    headerHeight: state.app.headerHeight,
+    isMobile: state.app.isMobile
 });
 
 const mapDispatchToProps = {

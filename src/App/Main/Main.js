@@ -11,22 +11,26 @@ import './Main.css';
 import Account from './Account';
 import CreateContact from './CreateContact';
 import { hideMobilePreview } from '../../common/store/action';
+import { enableBodyScroll } from 'body-scroll-lock';
 
 const Main = ({
     isLogged,
     mobilePreview,
-    hideMobilePreview
+    hideMobilePreview,
+    bodyLockRef
 }) => {
-
     return (
         <main className="main">
             <div className={mobilePreview ? "main-overlay visible" : "main-overlay"}
-                onClick={() => hideMobilePreview()}
+                onClick={() => {
+                    hideMobilePreview();
+                    enableBodyScroll(bodyLockRef.current);
+                }}
             ></div>
             <AnimatePresence exitBeforeEnter>
                 <Switch>
                     <Route path="/" exact>
-                        {isLogged ? <MainContent /> : <Redirect to="/account"/>}
+                        {isLogged ? <MainContent bodyLockRef={bodyLockRef}/> : <Redirect to="/account"/>}
                     </Route>
                     <Route path="/login">
                         {isLogged ? <Redirect to="/"/> : <Login />}

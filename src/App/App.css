@@ -5,6 +5,9 @@
 body {
     overflow-x: hidden;
 }
+#root {
+    position: relative;
+}
 html {
     height: -webkit-fill-available;
 }

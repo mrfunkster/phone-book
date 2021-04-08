@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
 import history from '../../common/components/history';
-import { logOut } from '../../common/store/action';
+import { logOut, setHeaderHeight } from '../../common/store/action';
 
 const contactsCount = (obj) => {
     if(obj) {
@@ -17,31 +17,49 @@ const contactsCount = (obj) => {
     };
 };
 
-const HeaderMenu = ({
-    isLogged,
-    logOut,
-    userContacts
-}) => {
-    if(isLogged) {
-        return (
-            <ul className="nav-menu">
-                <li><Link to="/">My Contacts{contactsCount(userContacts)}</Link></li>
-                <li><Link to="/account">Account</Link></li>
-                <li className="btn btn-danger"
-                    onClick={() => logOut()}
-                >Log Out</li>
-            </ul>
-        );
-    } else {
-        return (
-            <ul className="nav-menu">
-                <li><Link to="/login">Sign In</Link></li>
-                <li className="btn btn-success"
-                    onClick={() => history.push('/registration')}
-                >Sign Up</li>
-            </ul>
-        );
+class HeaderMenu extends Component {
+
+    headerHeight = () => {
+        const header = document.getElementById('header').clientHeight;
+        this.props.setHeaderHeight(header);
     }
+
+    componentDidMount() {
+        this.headerHeight();
+    };
+
+    componentDidUpdate() {
+        this.headerHeight();
+    };
+
+    render() {
+        const {
+            isLogged,
+            logOut,
+            userContacts,
+        } = this.props
+
+        if(isLogged) {
+            return (
+                <ul className="nav-menu">
+                    <li><Link to="/">My Contacts{contactsCount(userContacts)}</Link></li>
+                    <li><Link to="/account">Account</Link></li>
+                    <li className="btn btn-danger"
+                        onClick={() => logOut()}
+                    >Log Out</li>
+                </ul>
+            );
+        } else {
+            return (
+                <ul className="nav-menu">
+                    <li><Link to="/login">Sign In</Link></li>
+                    <li className="btn btn-success"
+                        onClick={() => history.push('/registration')}
+                    >Sign Up</li>
+                </ul>
+            );
+        };
+    };
 };
 
 const mapStateToProps = state => ({
@@ -50,8 +68,9 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = {
-    logOut
-}
+    logOut,
+    setHeaderHeight
+};
 
 export default connect(
     mapStateToProps,

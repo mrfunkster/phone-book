@@ -1,7 +1,7 @@
 import history from "../components/history";
 import base from "../components/firebase"
 import Cookies from "js-cookie";
-import { CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_PHONE_CONTACTS, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID, SET_SEARCH_QUERY, CLEAR_SEARCH_QUERY, GET_CONTACT_IMAGE, SHOW_CONTACTS_LOADER, HIDE_CONTACTS_LOADER, SHOW_MOBILE_PREVIEW, HIDE_MOBILE_PREVIEW } from "./types";
+import { CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_PHONE_CONTACTS, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_USER_DATA, SET_USER_ID, SET_SEARCH_QUERY, CLEAR_SEARCH_QUERY, GET_CONTACT_IMAGE, SHOW_CONTACTS_LOADER, HIDE_CONTACTS_LOADER, SHOW_MOBILE_PREVIEW, HIDE_MOBILE_PREVIEW, IS_MOBILE, SET_HEADER_HEIGHT } from "./types";
 
 
 export const logIn = () => {
@@ -105,6 +105,16 @@ export const showMobilePreview = () => ({
 
 export const hideMobilePreview = () => ({
     type: HIDE_MOBILE_PREVIEW
+});
+
+export const isMobile = payload => ({
+    type: IS_MOBILE,
+    payload
+});
+
+export const setHeaderHeight = payload => ({
+    type: SET_HEADER_HEIGHT,
+    payload
 });
 
 export const authWithEmailAndPassword = (formData) => {

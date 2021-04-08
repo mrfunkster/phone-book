@@ -1,19 +1,21 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Cookies from 'js-cookie';
 import { connect } from 'react-redux';
-import { authWithEmailAndPassword, loginWithCookies } from './common/store/action';
+import { authWithEmailAndPassword, isMobile, loginWithCookies, setHeaderHeight } from './common/store/action';
 
 import Footer from './App/Footer/Footer';
 import Header from './App/Header/Header';
 import Main from './App/Main/Main';
 
 import './App/App.css'
-import { formatPhoneNumber } from './common/components/commonFunctions';
+import { enableBodyScroll } from 'body-scroll-lock';
 
 
 function App({
   authWithEmailAndPassword,
-  loginWithCookies
+  loginWithCookies,
+  isMobile,
+  setHeaderHeight
 }) {
 
   const readCookie = () => {
@@ -25,15 +27,39 @@ function App({
     };
   };
 
+  const isMobileWidth = () => {
+    const {innerWidth: width} = window;
+    if (width < 768) return true;
+    else return false;
+  }
+
   useEffect(() => {
     readCookie();
-    formatPhoneNumber(380956929416)
-  })
+  });
+
+  const bodyLockRef = useRef(null);
+
+  useEffect(() => {
+    const handleResize = () => {
+      isMobile(isMobileWidth());
+      const header = document.getElementById('header').clientHeight;
+      setHeaderHeight(header);
+      if (!isMobileWidth()) {
+        enableBodyScroll(bodyLockRef.current);
+      };
+    };
+
+    isMobile(isMobileWidth());
+
+    window.addEventListener('resize', handleResize);
+
+    return () => window.removeEventListener('resize', handleResize);
+  });
 
   return (
     <>
       <Header />
-      <Main />
+      <Main bodyLockRef={bodyLockRef}/>
       <Footer />
     </>
   );
@@ -41,7 +67,9 @@ function App({
 
 const mapDispatchToProps = {
   authWithEmailAndPassword,
-  loginWithCookies
+  loginWithCookies,
+  isMobile,
+  setHeaderHeight
 }
 
 export default connect(

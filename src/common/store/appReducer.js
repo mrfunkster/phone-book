@@ -1,4 +1,4 @@
-import { CLEAR_CONTACT_IMAGE, CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_SEARCH_QUERY, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_CONTACT_IMAGE, GET_PHONE_CONTACTS, HIDE_CONTACTS_LOADER, HIDE_MOBILE_PREVIEW, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_SEARCH_QUERY, SET_USER_DATA, SET_USER_ID, SHOW_CONTACTS_LOADER, SHOW_MOBILE_PREVIEW } from "./types";
+import { CLEAR_CONTACT_IMAGE, CLEAR_COOKIE_STATE, CLEAR_PHONE_CONTACTS, CLEAR_SEARCH_QUERY, CLEAR_USER_CONTACT, CLEAR_USER_DATA, CLEAR_USER_ID, GET_CONTACT_IMAGE, GET_PHONE_CONTACTS, HIDE_CONTACTS_LOADER, HIDE_MOBILE_PREVIEW, IS_MOBILE, LOGIN_HIDE_LOADER, LOGIN_SHOW_LOADER, LOG_IN, LOG_OUT, SELECT_USER_CONTACT, SET_COOKIE_STATE, SET_HEADER_HEIGHT, SET_SEARCH_QUERY, SET_USER_DATA, SET_USER_ID, SHOW_CONTACTS_LOADER, SHOW_MOBILE_PREVIEW } from "./types";
 
 const initialState = {
     isLogged: false,
@@ -11,7 +11,9 @@ const initialState = {
     selectedUser: {},
     searchQuery: "",
     contactImage: "",
-    mobilePreview: false
+    mobilePreview: false,
+    isMobile: false,
+    headerHeight: ""
 }
 
 const appReducer = (state = initialState, action) => {
@@ -60,6 +62,10 @@ const appReducer = (state = initialState, action) => {
             return {...state, mobilePreview: true};
         case HIDE_MOBILE_PREVIEW:
             return {...state, mobilePreview: false};
+        case IS_MOBILE:
+            return {...state, isMobile: action.payload};
+        case SET_HEADER_HEIGHT:
+            return {...state, headerHeight: action.payload};
         default: return state;
     };
 };
