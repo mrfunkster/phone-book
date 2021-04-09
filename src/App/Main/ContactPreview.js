@@ -137,7 +137,8 @@ class ContactPreview extends Component {
         return (
             <div className="contact-preview-section shadow" id="contact-preview-section" ref={this.targetRef}
                 style={{
-                    top: !isMobile && headerHeight + 15 + 'px'
+                    top: !isMobile && headerHeight + 15 + 'px',
+                    maxHeight: isMobile ? `calc(98% - ${headerHeight}px - 15px)` : 'unset',
                 }}
             >
                 {

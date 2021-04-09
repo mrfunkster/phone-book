@@ -12,6 +12,7 @@
     "framer-motion": "^4.1.0",
     "js-cookie": "^2.2.1",
     "lodash": "^4.17.21",
+    "racese-react-mobile-height-wrapper": "^0.1.0",
     "react": "^17.0.2",
     "react-div-100vh": "^0.5.6",
     "react-dom": "^17.0.2",

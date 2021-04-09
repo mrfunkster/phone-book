@@ -4,6 +4,7 @@ import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getContactImage, selectUserContact, setContactImage } from '../../common/store/action';
+import Div100vh from 'react-div-100vh';
 
 import ContactPreview from './ContactPreview';
 import ContactList from './ContactList';
@@ -59,17 +60,16 @@ class MainContent extends Component {
                     {
                         phoneContacts.length ? 
                         <>
-                            <div className={mobilePreview ? "col-sm-12 col-md-4 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-4 col-lg-4 contact-preview-block"}
+                            <Div100vh className={mobilePreview ? "col-sm-12 col-md-4 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-4 col-lg-4 contact-preview-block"}
                                 style={{
                                     top: isMobile ? `${headerHeight}px` : 'unset',
-                                    maxHeight: isMobile ? `calc(100vh - ${headerHeight}px - 15px)` : 'unset'
                                 }}
                             >
                                 <ContactPreview 
                                     markSelected={this.markSelected}
                                     bodyLockRef={bodyLockRef}
                                 />
-                            </div>
+                            </Div100vh>
                             <div className="col-sm-12 col-md-8 col-lg-8">
                                 {
                                     contactsLoader ? 
