@@ -59,7 +59,7 @@ class MainContent extends Component {
                     {
                         phoneContacts.length ? 
                         <>
-                            <div className={mobilePreview ? "col-sm-12 col-md-8 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-8 col-lg-4 contact-preview-block"}
+                            <div className={mobilePreview ? "col-sm-12 col-md-5 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-5 col-lg-4 contact-preview-block"}
                                 style={{
                                     top: isMobile && `${headerHeight}px`,
                                 }}
@@ -69,7 +69,7 @@ class MainContent extends Component {
                                     bodyLockRef={bodyLockRef}
                                 />
                             </div>
-                            <div className="col-sm-12 col-md-12 col-lg-8">
+                            <div className="col-sm-12 col-md-7 col-lg-8">
                                 {
                                     contactsLoader ? 
                                         <div className="d-flex flex-column align-items-center">
