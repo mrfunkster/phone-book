@@ -275,7 +275,7 @@ const EditContact = ({
                 <div className="preview-modal">
                     {
                         !showModal ?
-                        <div className="modal-info">
+                        <div className="modal-info shadow">
                             <div className="spinner-border text-success" style={{width: "2.5rem", height: "2.5rem"}} role="status">
                                 <span className="visually-hidden">Loading...</span>
                             </div>

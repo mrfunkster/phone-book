@@ -138,7 +138,7 @@ class ContactPreview extends Component {
             <div className="contact-preview-section shadow" id="contact-preview-section" ref={this.targetRef}
                 style={{
                     top: !isMobile && headerHeight + 15 + 'px',
-                    maxHeight: isMobile ? `calc(97vh - ${headerHeight}px - 15px)` : 'unset',
+                    maxHeight: isMobile && `calc(97vh - ${headerHeight}px - 15px)`,
                 }}
             >
                 {
@@ -172,13 +172,13 @@ class ContactPreview extends Component {
                                                         </div>
                                                     </div>
                                                 :
-                                                    <div className="modal-info">
+                                                    <div className="modal-info shadow">
                                                         <h3 className="text-danger">
                                                             Attention!
                                                         </h3>
                                                         <p>This action will <span className="text-danger">delete</span> contact!</p>
                                                         <p>Are you sure to proceed?</p>
-                                                        <div className="input-field">
+                                                        <div className="input-field" style={{display: 'flex', justifyContent: 'center'}}>
                                                             <button className="btn btn-success"
                                                                 onClick={() => this.closeModal()}
                                                             >No</button>

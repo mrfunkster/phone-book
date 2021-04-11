@@ -36,7 +36,7 @@ const Main = ({
                         {isLogged ? <Redirect to="/"/> : <Login />}
                     </Route>
                     <Route path="/registration">
-                        <Registration />
+                        {isLogged ? <Redirect to="/"/> : <Registration />}
                     </Route>
                     <Route path="/account">
                         {isLogged ? <Account /> : <Redirect to="/login"/>}

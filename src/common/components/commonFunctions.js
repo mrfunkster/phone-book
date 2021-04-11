@@ -8,11 +8,17 @@ export const formatPhoneNumber = (phone) => {
     };
 };
 
-// export const normalizePhoneNumber = value => {
-//     let phone = value;
-//     phone.
-//     return phone
-// }
+export const contactsCount = (obj) => {
+    if(obj) {
+        if(Object.keys(obj).length) {
+            return Object.keys(obj).length;
+        } else {
+            return "";
+        };
+    } else {
+        return "";
+    };
+};
 
 export const namePreview = user => {
     let firstName, lastName;

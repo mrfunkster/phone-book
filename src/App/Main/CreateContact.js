@@ -280,14 +280,14 @@ const CreateContact = ({
                         <div className="modal-overlay">
                             {
                                 !showModal ?
-                                <div className="modal-info">
+                                <div className="modal-info shadow">
                                     <div className="spinner-border text-success" role="status">
                                         <span className="visually-hidden">Loading...</span>
                                     </div>
                                     <span>Creating a new contact...</span>
                                 </div>
                                 : success ?
-                                <div className="modal-info">
+                                <div className="modal-info shadow">
                                     <span style={{color: "#198754", fontSize: "30px", fontWeight: 600}}>Well Done!</span>
                                     <span>Youre contact is successfuly created!</span>
                                     <br/>
@@ -297,7 +297,7 @@ const CreateContact = ({
                                     >Ok</button>
                                 </div>
                                 :
-                                <div className="modal-info">
+                                <div className="modal-info shadow">
                                     <span style={{color: "#dc3545", fontSize: "30px", fontWeight: 600}}>Ooops!</span>
                                     <span>Something go wrong... Please try again!</span>
                                     <br/>

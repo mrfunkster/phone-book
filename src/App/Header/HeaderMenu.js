@@ -4,18 +4,9 @@ import { connect } from 'react-redux';
 
 import history from '../../common/components/history';
 import { logOut, setHeaderHeight } from '../../common/store/action';
+import { contactsCount } from '../../common/components/commonFunctions';
 
-const contactsCount = (obj) => {
-    if(obj) {
-        if(Object.keys(obj).length) {
-            return `(${Object.keys(obj).length})`;
-        } else {
-            return "";
-        };
-    } else {
-        return "";
-    };
-};
+
 
 class HeaderMenu extends Component {
 
@@ -42,7 +33,7 @@ class HeaderMenu extends Component {
         if(isLogged) {
             return (
                 <ul className="nav-menu">
-                    <li><Link to="/">My Contacts{contactsCount(userContacts)}</Link></li>
+                    <li><Link to="/">My Contacts{contactsCount(userContacts) ? `(${contactsCount(userContacts)})` : ""}</Link></li>
                     <li><Link to="/account">Account</Link></li>
                     <li className="btn btn-danger"
                         onClick={() => logOut()}
