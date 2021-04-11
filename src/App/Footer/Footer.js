@@ -7,7 +7,7 @@ const Footer = () => {
         <footer className="bg-dark">
             <div className="container">
                 <div className="row">
-                    <div className="col">Footer</div>
+                    <div className="col">2021, Dmytro Luhovskyi</div>
                 </div>
             </div>
         </footer>

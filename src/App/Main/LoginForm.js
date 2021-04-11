@@ -151,7 +151,9 @@ class LoginForm extends Component {
                     <div className="button-input">
                         {
                             !loginLoader ? 
-                                <button className="btn btn-success">Login</button>
+                                <button className="btn btn-success"
+                                    disabled={!this.state.email.length || !this.state.password.length}
+                                >Login</button>
                             : <div className="spinner-border text-success" role="status"></div>
                         }
                     </div>

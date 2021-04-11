@@ -19,9 +19,11 @@ const Account = ({
             <div className="row">
                 <div className="col">
                     <h2 className="text-centered">Account Page</h2>
+                    <br/>
                     <div className="main-description">
                             <h3 style={{textAlign: 'center'}}>Your account info:</h3>
                         </div>
+                        <br/>
                         <div className="account-info">
                             <div className="row">
                                 <div className="col input-name">
@@ -50,10 +52,13 @@ const Account = ({
                     </div>
                 </div>
             </div>
+            <br/>
             <div className="row">
-                <button className="btn btn-success"
-                    onClick={() => history.push("/")}
-                >Go to My PhoneBook page</button>
+                <div className="col flex justify-content-center">
+                    <button className="btn btn-success"
+                        onClick={() => history.push("/")}
+                    >Go to My PhoneBook page</button>
+                </div>
             </div>
             <ScrollToTopOnMount />
         </motion.div>

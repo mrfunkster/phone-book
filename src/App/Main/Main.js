@@ -12,6 +12,7 @@ import Account from './Account';
 import CreateContact from './CreateContact';
 import { hideMobilePreview } from '../../common/store/action';
 import { enableBodyScroll } from 'body-scroll-lock';
+import PageNotFound from './PageNotFound';
 
 const Main = ({
     isLogged,
@@ -44,6 +45,7 @@ const Main = ({
                     <Route path="/createcontact">
                         {isLogged ? <CreateContact /> : <Redirect to="/login"/>}
                     </Route>
+                    <Route path='*' component={PageNotFound}/>
                 </Switch>
             </AnimatePresence>
         </main>
