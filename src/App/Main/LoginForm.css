@@ -10,12 +10,27 @@
 }
 .login-form .form-input label input {
     width: 100%;
+    height: 50px;
     padding: 10px;
     border: none;
     border-radius: 10px;
+    outline: none;
 }
 .login-form .form-input label input:focus {
     box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+}
+.login-form .form-input label input:focus {
+    box-shadow: 0 1rem 3rem rgba(0,0,0,.175)!important;
+    border: 2px solid #0d6efd!important;
+}
+.login-form .form-input label input:disabled {
+    box-shadow: none !important;
+}
+.login-form .form-input.success input {
+    border: 2px solid #198754!important;
+}
+.login-form .form-input.error label input {
+    border: 2px solid #dc3545 !important;
 }
 .login-form .button-input {
     width: 100%;

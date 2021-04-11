@@ -4,7 +4,6 @@ import ScrollToTopOnMount from '../../common/components/ScrollToTopOnMount';
 import { connect } from 'react-redux';
 import { Link } from 'react-router-dom';
 import { getContactImage, selectUserContact, setContactImage } from '../../common/store/action';
-import Div100vh from 'react-div-100vh';
 
 import ContactPreview from './ContactPreview';
 import ContactList from './ContactList';
@@ -56,21 +55,21 @@ class MainContent extends Component {
                         <h2 className="text-centered main-content-title">My PhoneBook</h2>
                     </div>
                 </div>
-                <div className="row float">
+                <div className="row">
                     {
                         phoneContacts.length ? 
                         <>
-                            <Div100vh className={mobilePreview ? "col-sm-12 col-md-4 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-4 col-lg-4 contact-preview-block"}
+                            <div className={mobilePreview ? "col-sm-12 col-md-8 col-lg-4 contact-preview-block visible" : "col-sm-12 col-md-8 col-lg-4 contact-preview-block"}
                                 style={{
-                                    top: isMobile ? `${headerHeight}px` : 'unset',
+                                    top: isMobile && `${headerHeight}px`,
                                 }}
                             >
                                 <ContactPreview 
                                     markSelected={this.markSelected}
                                     bodyLockRef={bodyLockRef}
                                 />
-                            </Div100vh>
-                            <div className="col-sm-12 col-md-8 col-lg-8">
+                            </div>
+                            <div className="col-sm-12 col-md-12 col-lg-8">
                                 {
                                     contactsLoader ? 
                                         <div className="d-flex flex-column align-items-center">

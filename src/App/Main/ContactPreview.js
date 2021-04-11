@@ -138,7 +138,7 @@ class ContactPreview extends Component {
             <div className="contact-preview-section shadow" id="contact-preview-section" ref={this.targetRef}
                 style={{
                     top: !isMobile && headerHeight + 15 + 'px',
-                    maxHeight: isMobile ? `calc(98% - ${headerHeight}px - 15px)` : 'unset',
+                    maxHeight: isMobile ? `calc(97vh - ${headerHeight}px - 15px)` : 'unset',
                 }}
             >
                 {
@@ -155,14 +155,14 @@ class ContactPreview extends Component {
                                         />
                                     </>
                                 :
-                                <>
+                                <div className="contact-preview">
                                     {
                                         this.state.showModal && 
                                         <div className="preview-modal">
 
                                             {
                                                 this.state.isDeleting ?
-                                                    <>
+                                                    <div className="modal-info">
                                                         <div className="d-flex flex-column align-items-center">
                                                             <div className="spinner-border text-danger" style={{width: "3rem", height: "3rem"}} role="status">
                                                                 <span className="visually-hidden">Loading...</span>
@@ -170,7 +170,7 @@ class ContactPreview extends Component {
                                                             <span style={{fontSize: "22px", padding: "15px"}}>Deleting contact...</span>
                                                             <ScrollToTopOnMount />
                                                         </div>
-                                                    </>
+                                                    </div>
                                                 :
                                                     <div className="modal-info">
                                                         <h3 className="text-danger">
@@ -246,10 +246,16 @@ class ContactPreview extends Component {
                                         style={{marginTop: "15px", marginBottom: "15px"}}
                                         onClick={() => this.openDeleteModal()}
                                     >Delete Contact</button>
-                                </>
+                                </div>
                             }
                         </> :
                         <>
+                            <div className="text-primary back-to-list-btn"
+                                onClick={() => {
+                                    hideMobilePreview();
+                                    this.enableBodyScroll();
+                                }}
+                            >Back</div>
                             <div className="contact-header"><span>No User Selected</span></div>
                             <div className="contact-description"><span>Please select contact to see more details</span></div>
                         </>

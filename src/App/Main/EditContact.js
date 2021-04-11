@@ -151,27 +151,6 @@ const EditContact = ({
         };
     };
 
-    // const resetForm = () => {
-    //     if (window.confirm("Are you sure to clean ALL data?")) {
-    //         setFinishStatus(true);
-    //         clearContactImage();
-    //         setUserContactData({
-    //             firstName: "",
-    //             lastName: "",
-    //             phone: "",
-    //             email: "",
-    //             image: false,
-    //             notifications: "",
-    //             id: ""
-    //         });
-    //         setErrorObject({
-    //             firstName: false,
-    //             phone: false,
-    //             incorrectPhone: false
-    //         });
-    //     };
-    // };
-
     const uploadImage = async (contactID) => {
         const storageRef = base.storage().ref();
         const fileRef = storageRef.child(`${userID}/${contactID}/image`);

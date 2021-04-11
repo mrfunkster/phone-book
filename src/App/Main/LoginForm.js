@@ -9,8 +9,12 @@ class LoginForm extends Component {
     state = {
         email: "",
         password: "",
-        rememberMe: true
-    }
+        rememberMe: true,
+        emailEmpty: false,
+        emailWrong: false,
+        passwordEmpty: false,
+        passwordShort: false
+    };
 
     handleSubmit = e => {
         e.preventDefault();
@@ -23,8 +27,8 @@ class LoginForm extends Component {
             this.props.authWithEmailAndPassword(formData);
         } else {
             alert("Enter a correct email or password!")
-        }
-    }
+        };
+    };
 
     inputHandler = e => {
         e.persist();
@@ -47,11 +51,36 @@ class LoginForm extends Component {
         let error = 0;
         if(!this.state.email.length) {
             error++;
-        } else if(!this.state.password.length || this.state.password.length < 6) {
+        } else if (!this.validateEmail()) { 
+            error++;
+        } else if(!this.validatePassword()) {
             error ++
         };
         return error;
     }
+
+    validatePassword = () => {
+        if (!this.state.password.length) {
+            this.setState(prevState => ({...prevState, passwordEmpty: true}));
+            return false;
+        } else if (this.state.password.length < 6) {
+            this.setState(prevState => ({...prevState, passwordShort: true}));
+            return false;
+        } else {
+            return true;
+        };
+    };
+
+    validateEmail = () => {
+        const emailTest = () => {
+            const regEx = /^(([^<>()[\]\.,;:\s@\"]+(\.[^<>()[\]\.,;:\s@\"]+)*)|(\".+\"))@(([^<>()[\]\.,;:\s@\"]+\.)+[^<>()[\]\.,;:\s@\"]{2,})$/i; //eslint-disable-line
+            return regEx.test(this.state.email);
+        };
+        if(!emailTest()) {
+            this.setState(prevState => ({...prevState, emailWrong: true}));
+            return false;
+        };
+    };
 
     render() {
         const {
@@ -60,7 +89,7 @@ class LoginForm extends Component {
         return (
             <div className="login-form shadow">
                 <form onSubmit={this.handleSubmit}>
-                    <div className="form-input">
+                    <div className={this.state.emailWrong ? "form-input error" : "form-input"}>
                         <label htmlFor="">Email:
                             <input type="email"
                                 className="shadow"
@@ -69,10 +98,21 @@ class LoginForm extends Component {
                                 value={this.state.email}
                                 onChange={this.inputHandler}
                                 disabled={loginLoader}
+                                onBlur={() => this.validateEmail()}
+                                onFocus={e => {
+                                    this.setState(prevState => ({...prevState, emailWrong: false}));
+                                    let value = e.target.value;
+                                    e.target.value = value;
+                                }}
                             />
                         </label>
+                        {
+                            this.state.emailWrong &&
+                            <span className="text-danger"
+                            >Enter a correct email!</span>
+                        }
                     </div>
-                    <div className="form-input">
+                    <div className={(this.state.passwordShort || this.state.passwordEmpty) ? "form-input error" : "form-input"} >
                         <label htmlFor="">Password:
                             <input type="password"
                                 className="shadow"
@@ -81,8 +121,17 @@ class LoginForm extends Component {
                                 value={this.state.password}
                                 onChange={this.inputHandler}
                                 disabled={loginLoader}
+                                onBlur={() => this.validatePassword()}
+                                onFocus={(e) => {
+                                    this.setState(prevState => ({...prevState, passwordEmpty: false, passwordShort: false, password: ''}));
+                                }}
                             />
                         </label>
+                        {
+                            (this.state.passwordShort || this.state.passwordEmpty) &&
+                            <span className="text-danger"
+                            >Password must contains 6 characters or!</span>
+                        }
                     </div>
                     <div className="form-input form-check">
                         <div className="remember-me">

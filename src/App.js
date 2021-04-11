@@ -29,7 +29,7 @@ function App({
 
   const isMobileWidth = () => {
     const {innerWidth: width} = window;
-    if (width < 768) return true;
+    if (width <= 768) return true;
     else return false;
   }
 

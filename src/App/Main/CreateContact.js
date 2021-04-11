@@ -280,14 +280,14 @@ const CreateContact = ({
                         <div className="modal-overlay">
                             {
                                 !showModal ?
-                                <>
+                                <div className="modal-info">
                                     <div className="spinner-border text-success" role="status">
                                         <span className="visually-hidden">Loading...</span>
                                     </div>
                                     <span>Creating a new contact...</span>
-                                </>
+                                </div>
                                 : success ?
-                                <>
+                                <div className="modal-info">
                                     <span style={{color: "#198754", fontSize: "30px", fontWeight: 600}}>Well Done!</span>
                                     <span>Youre contact is successfuly created!</span>
                                     <br/>
@@ -295,17 +295,17 @@ const CreateContact = ({
                                         className="btn btn-success"
                                         onClick={() => successRedirect()}
                                     >Ok</button>
-                                </>
+                                </div>
                                 :
-                                <>
-                                <span style={{color: "#dc3545", fontSize: "30px", fontWeight: 600}}>Ooops!</span>
-                                <span>Something go wrong... Please try again!</span>
-                                <br/>
-                                <button 
-                                    className="btn btn-danger"
-                                    onClick={() => uploadingError()}
-                                >Ok</button>
-                            </>
+                                <div className="modal-info">
+                                    <span style={{color: "#dc3545", fontSize: "30px", fontWeight: 600}}>Ooops!</span>
+                                    <span>Something go wrong... Please try again!</span>
+                                    <br/>
+                                    <button 
+                                        className="btn btn-danger"
+                                        onClick={() => uploadingError()}
+                                    >Ok</button>
+                                </div>
                             }
                         </div>
                     }
@@ -333,7 +333,7 @@ const CreateContact = ({
                         />
                         <div className="contact-header"><span>{`${capitalizeFirstLetter(userContactData.firstName)} ${capitalizeFirstLetter(userContactData.lastName)}`}</span></div>
                         <div className="row">
-                            <div className="col-sm-12 col-md-8 col-lg-8 shadow input-fields-section">
+                            <div className="col-sm-12 col-md-12 col-lg-8 shadow input-fields-section">
                                 <div className="input-field">
                                     <div className="col-sm-12 col-md-6 col-lg-6 input-description">
                                         First Name<span className="text-danger">*</span>:

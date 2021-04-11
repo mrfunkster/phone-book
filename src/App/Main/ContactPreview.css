@@ -12,6 +12,12 @@ main {
 .contact-preview-section .input-description {
     padding: 0!important;
 }
+.contact-preview {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
 
 @media(max-width: 768px) {
     .main-overlay {
@@ -38,7 +44,6 @@ main {
         margin-top: 15px;
         margin-bottom: 15px;
         visibility: hidden;
-        opacity: 0;
         left: 0;
         transform: translateY(-100%);
     }
@@ -51,7 +56,6 @@ main {
     .contact-preview-block.visible {
         visibility: visible;
         transform: translateY(0);
-        opacity: 1;
     }
     .contact-preview-section .back-to-list-btn {
         display: block;
@@ -138,8 +142,6 @@ main {
     display: flex;
     flex-direction: column;
     margin-bottom: 15px;
-    overflow: hidden;
-    text-overflow: ellipsis;
 }
 .contact-info .description {
     font-size: .85rem;
