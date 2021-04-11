@@ -79,6 +79,8 @@ class LoginForm extends Component {
         if(!emailTest()) {
             this.setState(prevState => ({...prevState, emailWrong: true}));
             return false;
+        } else {
+            return true;
         };
     };
 
@@ -122,7 +124,7 @@ class LoginForm extends Component {
                                 onChange={this.inputHandler}
                                 disabled={loginLoader}
                                 onBlur={() => this.validatePassword()}
-                                onFocus={(e) => {
+                                onFocus={() => {
                                     this.setState(prevState => ({...prevState, passwordEmpty: false, passwordShort: false, password: ''}));
                                 }}
                             />
@@ -130,7 +132,7 @@ class LoginForm extends Component {
                         {
                             (this.state.passwordShort || this.state.passwordEmpty) &&
                             <span className="text-danger"
-                            >Password must contains 6 characters or!</span>
+                            >Password must contains 6 characters or more!</span>
                         }
                     </div>
                     <div className="form-input form-check">
