@@ -3,13 +3,22 @@ import 'firebase/auth';
 import 'firebase/database';
 import 'firebase/storage';
 
+const {
+  REACT_APP_API_KEY,
+  REACT_APP_AUTH_DOMAIN,
+  REACT_APP_PROJECT_ID,
+  REACT_APP_STORAGE_BUCKET,
+  REACT_APP_MESSAGING_SENDER_ID,
+  REACT_APP_APP_ID
+} = process.env;
+
 const base = firebase.initializeApp({
-    apiKey: "AIzaSyC17Bq2uRElftMfYFO6N49yl27AnIwfGTM",
-    authDomain: "phone-book-app-9bb83.firebaseapp.com",
-    projectId: "phone-book-app-9bb83",
-    storageBucket: "phone-book-app-9bb83.appspot.com",
-    messagingSenderId: "578806845196",
-    appId: "1:578806845196:web:7446b71a3d4ee148544329"
+    apiKey: REACT_APP_API_KEY,
+    authDomain: REACT_APP_AUTH_DOMAIN,
+    projectId: REACT_APP_PROJECT_ID,
+    storageBucket: REACT_APP_STORAGE_BUCKET,
+    messagingSenderId: REACT_APP_MESSAGING_SENDER_ID,
+    appId: REACT_APP_APP_ID
   }
 );
 
